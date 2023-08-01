@@ -10,7 +10,7 @@ import java.util.*;
 import lombok.NonNull;
 
 public class MateriaData  implements MateriaDataInterface{
-    protected static Map<Integer, Materia> listaMaterias = new HashMap<>();
+    public static Map<Integer, Materia> listaMaterias = new HashMap<>();
     private static int contadorIds;
 
     public static enum OrderMateriaBy{
