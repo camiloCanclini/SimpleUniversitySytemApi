@@ -14,4 +14,5 @@ public class Profesor {
     private final String apellido;
     private final String titulo;
     private List<Materia> materiasDictadas;
+
 }

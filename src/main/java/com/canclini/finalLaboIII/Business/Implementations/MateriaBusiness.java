@@ -31,7 +31,7 @@ public class MateriaBusiness implements MateriaBusinessInterface {
     }
 
     @Override
-    public Materia buscarMateriaByNombre(String nombreMateria) {
+    public Materia buscarMateriaByNombre(String nombreMateria)  {
         return materiaData.buscarMateriabyNombre(nombreMateria);
     }
 

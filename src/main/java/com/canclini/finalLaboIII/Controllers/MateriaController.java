@@ -28,7 +28,7 @@ public class MateriaController {
             return ResponseEntity.ok(materiaBusiness.buscarMateriaByNombre(nombre));
         }
         catch (NoHayMateriasException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la materia");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay Materias");
         }
         catch (MateriaNoEncontradaException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la materia");
@@ -50,7 +50,7 @@ public class MateriaController {
             return ResponseEntity.badRequest().body("Los Tipos de Ordenamientos disponibles son: "+ Arrays.toString(OrderMateriaBy.values()));
         }
         catch (NoHayMateriasException e){
-            return ResponseEntity.ok("No Hay Materias Cargadas");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Hay Materias Cargadas");
         }
     }
     @PostMapping("/materia")

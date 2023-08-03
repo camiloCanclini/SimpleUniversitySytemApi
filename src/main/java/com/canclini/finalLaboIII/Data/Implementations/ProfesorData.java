@@ -7,7 +7,7 @@ import com.canclini.finalLaboIII.Entity.Profesor;
 
 import java.util.Map;
 
-public class ProfesorData extends MemoryDataAbstract implements ProfesorDataInterface{
+public class ProfesorData extends MemoryDataAbstract<Profesor> implements ProfesorDataInterface{
     @Override
     public int crearProfesor(Profesor profesor) {
         int idProfesor = generarId();

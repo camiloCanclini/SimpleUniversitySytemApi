@@ -1,9 +1,7 @@
 package com.canclini.finalLaboIII.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -13,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Materia {
     private String nombre;
-    private int anio;
-    private int cuatrimestre;
+    private Integer anio;
+    private Integer cuatrimestre;
     private Profesor profesor;
     private List<Materia> correlatividades;
     public void agregarCorrelatividad(Materia m){
