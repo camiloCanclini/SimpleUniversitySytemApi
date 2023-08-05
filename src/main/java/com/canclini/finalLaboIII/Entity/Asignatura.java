@@ -15,7 +15,7 @@ public class Asignatura {
         CURSADA,
         APROBADA
     }
-    private int idMateria;
+    private Integer idMateria;
     private Estado estado;
     private Integer nota;
 }

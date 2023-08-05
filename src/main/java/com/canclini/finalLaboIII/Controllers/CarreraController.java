@@ -7,9 +7,11 @@ import com.canclini.finalLaboIII.Entity.Carrera;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping
+@Validated
 public class CarreraController {
     private final CarreraBusiness carreraBusiness = new CarreraBusiness();
 

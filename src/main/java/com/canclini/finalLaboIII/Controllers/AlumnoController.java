@@ -1,5 +1,7 @@
 package com.canclini.finalLaboIII.Controllers;
 
+import com.canclini.finalLaboIII.Business.Dtos.AlumnoDto;
+import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.AlumnoBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Exceptions.AsignaturaNoEncontradaException;
@@ -7,32 +9,46 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
 import jakarta.annotation.Nullable;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping
+@Validated
 public class AlumnoController {
-    private final AlumnoBusiness alumnoBusiness = new AlumnoBusiness();
+    @Autowired
+    private AlumnoBusiness alumnoBusiness;
     @GetMapping("/alumnos")
-    public ResponseEntity<?> getAlumnos(){
+    public ResponseEntity<ResponseDtoJson> getAlumnos(){
         try {
-            return ResponseEntity.ok(alumnoBusiness.obtenerListaAlumnos());
+            Map<Integer, Alumno> alumnos = alumnoBusiness.obtenerListaAlumnos();
+            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, null, alumnos));
         }
         catch (NoHayAlumnosException e){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Hay Alumnos Cargados");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
         }
     }
     @PostMapping("/alumno")
-    public ResponseEntity<?> crearAlumno(@Nullable @RequestBody Alumno alumno){
-        if (alumno == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos del Alumno");
+
+    public ResponseEntity<?> crearAlumno(@RequestBody @Valid AlumnoDto alumno){
+        try{
+            if (alumno == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos del Alumno");
+            }
+            return ResponseEntity.ok(alumnoBusiness.crearAlumno(alumno));
+        }catch (ConstraintViolationException e){
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(alumnoBusiness.crearAlumno(alumno));
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<?> editarAlumno(@Nullable @RequestBody Alumno alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<?> editarAlumno(@Nullable @RequestBody AlumnoDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos del Alumno");
         }
@@ -70,7 +86,7 @@ public class AlumnoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique El Estado de la ASignatura");
         }
         try{
-            alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, Asignatura.Estado.valueOf(estado));
+            alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, Asignatura.Estado.valueOf(estado.toUpperCase()));
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado el Alumno");
         }

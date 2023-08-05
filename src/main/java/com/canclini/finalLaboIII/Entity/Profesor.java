@@ -10,9 +10,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class Profesor {
-    private final String nombre;
-    private final String apellido;
-    private final String titulo;
+    private String nombre;
+    private String apellido;
+    private String titulo;
     private List<Materia> materiasDictadas;
 
 }

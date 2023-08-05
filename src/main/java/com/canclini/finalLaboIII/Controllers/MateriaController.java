@@ -9,6 +9,7 @@ import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping
+@Validated
 public class MateriaController {
 
     private final MateriaBusiness materiaBusiness = new MateriaBusiness();
@@ -44,7 +46,7 @@ public class MateriaController {
             if (order == null || order.isEmpty()) {
                 return ResponseEntity.ok(materiaBusiness.obtenerListaMaterias());
             }
-            OrderMateriaBy orderBy = OrderMateriaBy.valueOf(order.toUpperCase());
+            OrderMateriaBy orderBy = OrderMateriaBy.valueOf(order.toLowerCase());
             return ResponseEntity.ok(materiaBusiness.obtenerListaMateriasOrderedBy(orderBy));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body("Los Tipos de Ordenamientos disponibles son: "+ Arrays.toString(OrderMateriaBy.values()));
