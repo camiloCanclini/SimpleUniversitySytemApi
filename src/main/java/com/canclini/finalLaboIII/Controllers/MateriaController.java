@@ -1,5 +1,7 @@
 package com.canclini.finalLaboIII.Controllers;
 
+import com.canclini.finalLaboIII.Business.Dtos.MateriaDto;
+import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.MateriaBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
@@ -24,7 +26,7 @@ public class MateriaController {
     @GetMapping("/materia")
     public ResponseEntity<?> getMateriaByNombre(@Nullable @RequestParam String nombre){
         if (nombre == null || nombre.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique el nombre de la materia (/materia?nombre='nombremateria')");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "Ingrese co", null));
         }
         try{
             return ResponseEntity.ok(materiaBusiness.buscarMateriaByNombre(nombre));
@@ -56,14 +58,14 @@ public class MateriaController {
         }
     }
     @PostMapping("/materia")
-    public ResponseEntity<?> crearMateria(@Nullable @RequestBody Materia materia){
+    public ResponseEntity<?> crearMateria(@Nullable @RequestBody MateriaDto materia){
         if (materia == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
         }
         return ResponseEntity.ok(materiaBusiness.crearMateria(materia));
     }
     @PutMapping("/materia/{idMateria}")
-    public ResponseEntity<?> editarMateria(@Nullable @RequestBody Materia materia, @PathVariable Integer idMateria){
+    public ResponseEntity<?> editarMateria(@Nullable @RequestBody MateriaDto materia, @PathVariable Integer idMateria){
         if (materia == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
         }

@@ -8,7 +8,9 @@ import com.canclini.finalLaboIII.Entity.Materia;
 import java.util.*;
 
 import lombok.NonNull;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MateriaData  implements MateriaDataInterface{
     public static Map<Integer, Materia> listaMaterias = new HashMap<>();
     private static int contadorIds;

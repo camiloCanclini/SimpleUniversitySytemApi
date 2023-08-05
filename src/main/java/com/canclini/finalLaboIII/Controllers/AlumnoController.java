@@ -1,6 +1,7 @@
 package com.canclini.finalLaboIII.Controllers;
 
 import com.canclini.finalLaboIII.Business.Dtos.AlumnoDto;
+import com.canclini.finalLaboIII.Business.Dtos.AsignaturaDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.AlumnoBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
@@ -9,7 +10,6 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
 import jakarta.annotation.Nullable;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,62 +37,62 @@ public class AlumnoController {
     }
     @PostMapping("/alumno")
 
-    public ResponseEntity<?> crearAlumno(@RequestBody @Valid AlumnoDto alumno){
-        try{
-            if (alumno == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos del Alumno");
-            }
-            return ResponseEntity.ok(alumnoBusiness.crearAlumno(alumno));
-        }catch (ConstraintViolationException e){
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<ResponseDtoJson> crearAlumno(@RequestBody @Valid AlumnoDto alumno){
+
+    if (alumno == null) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
+    }
+    Integer idNuevoAlumno = alumnoBusiness.crearAlumno(alumno);
+    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno creado exitosamente", idNuevoAlumno));
+
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<?> editarAlumno(@Nullable @RequestBody AlumnoDto alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody AlumnoDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos del Alumno");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
         }
         try{
             alumnoBusiness.editarAlumno(idAlumno, alumno);
         }catch (AlumnoNoEncontradoException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado el Alumno");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
-        return ResponseEntity.ok("Se a Editado el Alumno Correctamente");
+        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha editado correctamente el alumno", null));
     }
     @DeleteMapping("/alumno/{idAlumno}")
-    public ResponseEntity<?> eliminarAlumno(@PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> eliminarAlumno(@PathVariable Integer idAlumno){
         try{
             alumnoBusiness.borrarAlumno(idAlumno);
         }catch (AlumnoNoEncontradoException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado el Alumno");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
-        return ResponseEntity.ok("Alumno Eliminado Correctamente");
+        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno Eliminado Exitosamente", null));
     }
 
     @PostMapping("/alumno/{idAlumno}/asignatura")
-    public ResponseEntity<?> aniadirAsignaturaAlumno(@PathVariable Integer idAlumno, @Nullable @RequestBody Asignatura asignatura){
+    public ResponseEntity<ResponseDtoJson> aniadirAsignaturaAlumno(@PathVariable Integer idAlumno, @Nullable @RequestBody @Valid AsignaturaDto asignatura){
         if (asignatura == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los Datos de la Asignatura");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese correctamente los datos de la Asignatura", null));
         }
         try{
-            return ResponseEntity.ok(alumnoBusiness.aniadirAsignatura(idAlumno, asignatura));
+            Integer idAsignatura = alumnoBusiness.aniadirAsignatura(idAlumno, asignatura);
+            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "La asignatura se añadió correctamente", idAsignatura));
         }catch (AlumnoNoEncontradoException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado el Alumno");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
     }
     @PutMapping("/alumno/{idAlumno}/asignatura/{idAsignatura}")
-    public ResponseEntity<?> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody String estado){
+    public ResponseEntity<ResponseDtoJson> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody String estado){
         if (estado == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique El Estado de la ASignatura");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese correctamente el estado de la Asignatura", null));
         }
         try{
             alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, Asignatura.Estado.valueOf(estado.toUpperCase()));
         }catch (AlumnoNoEncontradoException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado el Alumno");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
         catch (AsignaturaNoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la Asignatura");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la Asignatura", null));
         }
-        return ResponseEntity.ok("Se a Cambiado el Estado de Asignatura Correctamente");
+        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Estado de asignatura cambiado correctamente", null));
     }
 }

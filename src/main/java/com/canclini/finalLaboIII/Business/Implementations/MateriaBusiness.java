@@ -1,18 +1,25 @@
 package com.canclini.finalLaboIII.Business.Implementations;
 
+import com.canclini.finalLaboIII.Business.Dtos.MateriaDto;
 import com.canclini.finalLaboIII.Business.Interfaces.MateriaBusinessInterface;
+import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Materia;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+@Service
 public class MateriaBusiness implements MateriaBusinessInterface {
-    private static MateriaData materiaData = new MateriaData();
+    @Autowired
+    private static MateriaData materiaData;
+
     @Override
-    public int crearMateria(@NonNull Materia materia) {
-        return materiaData.crearMateria(materia);
+    public int crearMateria(@NonNull MateriaDto materia) {
+        return materiaData.crearMateria(new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<Materia>()));
     }
 
     @Override
@@ -21,8 +28,8 @@ public class MateriaBusiness implements MateriaBusinessInterface {
     }
 
     @Override
-    public void editarMateria(int idMateria, Materia materia) {
-        materiaData.editarMateria(idMateria, materia);
+    public void editarMateria(int idMateria, MateriaDto materia) {
+        materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<Materia>()));
     }
 
     @Override

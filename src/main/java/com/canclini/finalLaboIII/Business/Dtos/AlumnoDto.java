@@ -1,5 +1,6 @@
 package com.canclini.finalLaboIII.Business.Dtos;
 
+import com.canclini.finalLaboIII.Entity.Asignatura;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,4 +22,6 @@ public class AlumnoDto {
     @Min(1)
     @NotNull
     private Long dni;
+
+    private Asignatura.Estado estado;
 }

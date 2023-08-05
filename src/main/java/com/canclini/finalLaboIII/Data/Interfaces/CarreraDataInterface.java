@@ -12,5 +12,5 @@ public interface CarreraDataInterface {
     public void editarCarrera(int idCarrera, Carrera carrera);
     public Object buscarCarreraById(int idCarrera);
     public List<Map.Entry<Integer, Materia>> obtenerListaMateriaDeCarrera(int idCarrera);
-    public Map<Integer, Integer> obtenerListaCarrera();
+    public Map<Integer, Carrera> obtenerListaCarrera();
 }

@@ -20,4 +20,6 @@ public class MateriaDto {
     @Min(value = 1, message = "La cantidad de cuatrimestres debe ser mayor cero")
     @NotNull(message = "La cantidad de cuatrimestres no puede ser NULL")
     private Integer cuatrimestre;
+
+
 }

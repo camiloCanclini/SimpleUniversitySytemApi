@@ -1,16 +1,14 @@
 package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.AlumnoDto;
+import com.canclini.finalLaboIII.Business.Dtos.AsignaturaDto;
 import com.canclini.finalLaboIII.Business.Interfaces.AlumnoBusinessInterface;
 import com.canclini.finalLaboIII.Data.Implementations.AlumnoData;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
-import com.canclini.finalLaboIII.Entity.Carrera;
-import com.canclini.finalLaboIII.Entity.Materia;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 @Service
 public class AlumnoBusiness implements AlumnoBusinessInterface {
@@ -51,7 +49,8 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) {
+    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) {
+        Asignatura asignatura = new Asignatura(asignaturaDto.getIdMateria(),asignaturaDto.getEstado(), asignaturaDto.getNota());
         return alumnoData.aniadirAsignatura(idAlumno, asignatura);
     }
 

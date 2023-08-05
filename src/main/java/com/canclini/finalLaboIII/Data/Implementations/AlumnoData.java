@@ -9,10 +9,11 @@ import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Service
 public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoDataInterface {
     @Override
     public int crearAlumno(@NonNull Alumno alumno) {

@@ -15,8 +15,4 @@ public class Materia {
     private Integer cuatrimestre;
     private Profesor profesor;
     private List<Materia> correlatividades;
-    public void agregarCorrelatividad(Materia m){
-        this.correlatividades.add(m);
-
-    }
 }

@@ -6,11 +6,15 @@ import com.canclini.finalLaboIII.Data.Interfaces.CarreraDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Carrera;
 import com.canclini.finalLaboIII.Entity.Materia;
+import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CarreraData extends MemoryDataAbstract implements CarreraDataInterface {
+@Service
+public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraDataInterface {
+
     @Override
     public int crearCarrera(Carrera carrera) {
         int idCarrera = generarId();
@@ -41,14 +45,14 @@ public class CarreraData extends MemoryDataAbstract implements CarreraDataInterf
     }
 
     @Override
-    public Object buscarCarreraById(int idCarrera) {
+    public Carrera buscarCarreraById(int idCarrera) {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }
         if (!lista.containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        return lista.get(idCarrera);
+        return (Carrera) lista.get(idCarrera);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class CarreraData extends MemoryDataAbstract implements CarreraDataInterf
     }
 
     @Override
-    public Map obtenerListaCarrera() {
+    public Map<Integer, Carrera> obtenerListaCarrera() {
         return lista;
     }
 }

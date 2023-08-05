@@ -4,9 +4,10 @@ import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Interfaces.ProfesorDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Profesor;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
-
+@Service
 public class ProfesorData extends MemoryDataAbstract<Profesor> implements ProfesorDataInterface{
     @Override
     public int crearProfesor(Profesor profesor) {
