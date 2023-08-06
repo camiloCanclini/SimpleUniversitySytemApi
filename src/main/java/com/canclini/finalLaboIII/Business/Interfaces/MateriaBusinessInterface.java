@@ -1,6 +1,6 @@
 package com.canclini.finalLaboIII.Business.Interfaces;
 
-import com.canclini.finalLaboIII.Business.Dtos.MateriaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Materia;
 

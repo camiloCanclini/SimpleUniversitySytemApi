@@ -1,18 +1,18 @@
 package com.canclini.finalLaboIII.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
-@AllArgsConstructor
-public class Profesor {
-    private String nombre;
-    private String apellido;
+@Data
+@NoArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+public class Profesor extends Persona{
     private String titulo;
-    private List<Materia> materiasDictadas;
-
+    private Set<Integer> materiasDictadas;
 }

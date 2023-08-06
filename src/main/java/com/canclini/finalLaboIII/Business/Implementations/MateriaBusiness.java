@@ -1,8 +1,7 @@
 package com.canclini.finalLaboIII.Business.Implementations;
 
-import com.canclini.finalLaboIII.Business.Dtos.MateriaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Business.Interfaces.MateriaBusinessInterface;
-import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Materia;
 import lombok.NonNull;

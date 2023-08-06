@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MateriaData  implements MateriaDataInterface{
-    public static Map<Integer, Materia> listaMaterias = new HashMap<>();
+    public static HashMap<Integer, Materia> listaMaterias = new HashMap<>();
     private static int contadorIds;
 
     public static enum OrderMateriaBy{
@@ -44,6 +44,9 @@ public class MateriaData  implements MateriaDataInterface{
     public void editarMateria(int idMateria, Materia materia) {
         if (listaMaterias.isEmpty()) {
             throw new NoHayMateriasException();
+        }
+        if (!listaMaterias.containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
         }
         listaMaterias.replace(idMateria, materia);
     }

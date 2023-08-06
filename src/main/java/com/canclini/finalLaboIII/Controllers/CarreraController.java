@@ -1,6 +1,6 @@
 package com.canclini.finalLaboIII.Controllers;
 
-import com.canclini.finalLaboIII.Business.Dtos.CarreraDto;
+import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.CarreraBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
@@ -76,6 +76,10 @@ public class CarreraController {
             carreraBusiness.editarCarrera(idCarrera, carrera);
         }catch (CarreraNoEncontradaException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se a encontrado la carrera", idCarrera));
+        } catch (NoHayDepartamentosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Departamentos Cargados", null));
+        } catch (DepartamentoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No Se Ha Encontrado El Departamento", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se a Editado la Carrera Correctamente", idCarrera));
     }

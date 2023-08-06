@@ -1,14 +1,20 @@
 package com.canclini.finalLaboIII.Data.Implementations;
 
+import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Interfaces.ProfesorDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
+import com.canclini.finalLaboIII.Entity.Materia;
 import com.canclini.finalLaboIII.Entity.Profesor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 @Service
 public class ProfesorData extends MemoryDataAbstract<Profesor> implements ProfesorDataInterface{
+
+    HashMap<Integer, Materia> listaMaterias = MateriaData.listaMaterias;
     @Override
     public int crearProfesor(Profesor profesor) {
         int idProfesor = generarId();
@@ -25,18 +31,31 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
     }
 
     @Override
-    public void editarProfesor(int idProfesor, Profesor profesor) {
+    public void agregarMateria(int idProfesor, Integer idMateria) {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
-        lista.replace(idProfesor, profesor);
+        if (!listaMaterias.containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+        lista.get(idProfesor).getMateriasDictadas().add(idMateria);
     }
-
     @Override
-    public Object buscarProfesorById(int idProfesor) {
+    public void borrarMateria(int idProfesor, Integer idMateria) {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
+        if (!listaMaterias.containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+        lista.get(idProfesor).getMateriasDictadas().remove(idMateria);
+    }
+    @Override
+    public Profesor buscarProfesorById(int idProfesor) {
+        if (!lista.containsKey(idProfesor)) {
+            throw new ProfesorNoEncontradoException();
+        }
+
         return lista.get(idProfesor);
     }
 

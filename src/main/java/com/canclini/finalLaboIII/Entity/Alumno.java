@@ -11,9 +11,6 @@ import java.util.HashMap;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Alumno {
-    private String nombre;
-    private String apellido;
-    private long dni;
+public class Alumno extends Persona{
     private HashMap<Integer,Asignatura> asignaturas = new HashMap<>();
 }

@@ -1,11 +1,14 @@
 package com.canclini.finalLaboIII.Controllers;
 
-import com.canclini.finalLaboIII.Business.Dtos.AlumnoDto;
-import com.canclini.finalLaboIII.Business.Dtos.AsignaturaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoDto;
+import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoEditarDto;
+import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaEditarDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.AlumnoBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Exceptions.AsignaturaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.EstadoAsignaturaNoPermitidoException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
@@ -47,7 +50,7 @@ public class AlumnoController {
 
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody AlumnoDto alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
         }
@@ -81,16 +84,13 @@ public class AlumnoController {
         }
     }
     @PutMapping("/alumno/{idAlumno}/asignatura/{idAsignatura}")
-    public ResponseEntity<ResponseDtoJson> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody String estado){
-        if (estado == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese correctamente el estado de la Asignatura", null));
-        }
+    public ResponseEntity<ResponseDtoJson> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody AsignaturaEditarDto asignaturaEditarDto){
         try{
-            alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, Asignatura.Estado.valueOf(estado.toUpperCase()));
+            alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, asignaturaEditarDto);
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
-        catch (AsignaturaNoEncontradaException e){
+        catch (AsignaturaNoEncontradaException | EstadoAsignaturaNoPermitidoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la Asignatura", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Estado de asignatura cambiado correctamente", null));

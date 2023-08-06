@@ -1,14 +1,10 @@
 package com.canclini.finalLaboIII.Controllers;
 
-import com.canclini.finalLaboIII.Business.Dtos.CarreraDto;
 import com.canclini.finalLaboIII.Business.Dtos.DepartamentoDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.DepartamentoBusiness;
-import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
-import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
-import com.canclini.finalLaboIII.Entity.Carrera;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

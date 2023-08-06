@@ -5,11 +5,9 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
 import com.canclini.finalLaboIII.Data.Interfaces.CarreraDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Carrera;
-import com.canclini.finalLaboIII.Entity.Materia;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 
 @Service
@@ -56,7 +54,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public List<Map.Entry<Integer, Materia>> obtenerListaMateriaDeCarrera(int idCarrera) {
+    public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }

@@ -1,21 +1,18 @@
 package com.canclini.finalLaboIII.Controllers;
 
-import com.canclini.finalLaboIII.Business.Dtos.MateriaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.MateriaBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData.OrderMateriaBy;
-import com.canclini.finalLaboIII.Entity.Materia;
 import jakarta.annotation.Nullable;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 @RestController
 @RequestMapping

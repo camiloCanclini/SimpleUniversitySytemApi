@@ -14,5 +14,7 @@ public interface AlumnoDataInterface {
     public Alumno buscarAlumnoById(int idAlumno);
     public Map<Integer, Alumno> obtenerListaAlumnos();
     public int aniadirAsignatura(int idAlumno, Asignatura asignatura);
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado);
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota);
+
+
 }

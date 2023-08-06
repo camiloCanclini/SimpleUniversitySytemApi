@@ -1,4 +1,4 @@
-package com.canclini.finalLaboIII.Business.Dtos;
+package com.canclini.finalLaboIII.Business.Dtos.Asignatura;
 
 import com.canclini.finalLaboIII.Entity.Asignatura;
 import jakarta.validation.constraints.Min;
@@ -11,12 +11,7 @@ import lombok.Setter;
 public class AsignaturaDto {
 
     @NotNull(message = "El id de la materia no puede ser NULL")
+    @Min(1)
     private Integer idMateria;
 
-    @NotNull(message = "El estado no puede ser NULL")
-    private Asignatura.Estado estado;
-
-    @Min(value = 1, message = "La nota debe ser mayor cero")
-    @NotNull(message = "La nota no puede ser NULL")
-    private Integer nota;
 }
