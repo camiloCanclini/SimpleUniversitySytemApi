@@ -9,6 +9,8 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
 import com.canclini.finalLaboIII.Entity.Carrera;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +22,8 @@ import java.util.Map;
 @RequestMapping
 @Validated
 public class CarreraController {
-    private final CarreraBusiness carreraBusiness = new CarreraBusiness();
+    @Autowired
+    private CarreraBusiness carreraBusiness;
 
     @GetMapping("/carrera/{idCarrera}")
     public ResponseEntity<ResponseDtoJson> getCarreraById(@Nullable @PathVariable Integer idCarrera){
@@ -49,7 +52,7 @@ public class CarreraController {
         }
     }
     @PostMapping("/carrera")
-    public ResponseEntity<ResponseDtoJson> crearCarrera(@Nullable @RequestBody CarreraDto carrera){
+    public ResponseEntity<ResponseDtoJson> crearCarrera(@Nullable @RequestBody @Valid CarreraDto carrera){
         if (carrera == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la Carrera", null));
         }
@@ -65,7 +68,7 @@ public class CarreraController {
         }
     }
     @PutMapping("/carrera/{idCarrera}")
-    public ResponseEntity<ResponseDtoJson> editarCarrera(@Nullable @RequestBody CarreraDto carrera, @PathVariable Integer idCarrera){
+    public ResponseEntity<ResponseDtoJson> editarCarrera(@Nullable @RequestBody @Valid CarreraDto carrera, @PathVariable Integer idCarrera){
         if (carrera == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la Carrera", null));
         }

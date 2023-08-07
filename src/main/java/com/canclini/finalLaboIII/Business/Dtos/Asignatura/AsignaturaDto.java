@@ -11,7 +11,7 @@ import lombok.Setter;
 public class AsignaturaDto {
 
     @NotNull(message = "El id de la materia no puede ser NULL")
-    @Min(1)
+    @Min(0)
     private Integer idMateria;
 
 }

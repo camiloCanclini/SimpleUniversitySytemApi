@@ -17,7 +17,7 @@ public class CarreraBusiness implements CarreraBusinessInterface {
     @Autowired
     CarreraData carreraData;
     @Autowired
-    private DepartamentoData departamentoData;
+    DepartamentoData departamentoData;
     @Override
     public int crearCarrera(CarreraDto carreraDto) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
         if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {

@@ -50,7 +50,7 @@ public class AlumnoController {
 
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody @Valid AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
         }
@@ -84,8 +84,9 @@ public class AlumnoController {
         }
     }
     @PutMapping("/alumno/{idAlumno}/asignatura/{idAsignatura}")
-    public ResponseEntity<ResponseDtoJson> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody AsignaturaEditarDto asignaturaEditarDto){
+    public ResponseEntity<ResponseDtoJson> cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody @Valid AsignaturaEditarDto asignaturaEditarDto){
         try{
+            assert asignaturaEditarDto != null;
             alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, asignaturaEditarDto);
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));

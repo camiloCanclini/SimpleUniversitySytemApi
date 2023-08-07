@@ -7,6 +7,8 @@ import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData.OrderMateriaBy;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,8 +20,8 @@ import java.util.Arrays;
 @RequestMapping
 @Validated
 public class MateriaController {
-
-    private final MateriaBusiness materiaBusiness = new MateriaBusiness();
+    @Autowired
+    private MateriaBusiness materiaBusiness;
     @GetMapping("/materia")
     public ResponseEntity<?> getMateriaByNombre(@Nullable @RequestParam String nombre){
         if (nombre == null || nombre.isEmpty()) {
@@ -55,14 +57,14 @@ public class MateriaController {
         }
     }
     @PostMapping("/materia")
-    public ResponseEntity<?> crearMateria(@Nullable @RequestBody MateriaDto materia){
+    public ResponseEntity<?> crearMateria(@Nullable @RequestBody @Valid MateriaDto materia){
         if (materia == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
         }
         return ResponseEntity.ok(materiaBusiness.crearMateria(materia));
     }
     @PutMapping("/materia/{idMateria}")
-    public ResponseEntity<?> editarMateria(@Nullable @RequestBody MateriaDto materia, @PathVariable Integer idMateria){
+    public ResponseEntity<?> editarMateria(@Nullable @RequestBody @Valid MateriaDto materia, @PathVariable Integer idMateria){
         if (materia == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
         }

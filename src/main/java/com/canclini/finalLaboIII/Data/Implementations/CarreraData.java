@@ -5,12 +5,13 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
 import com.canclini.finalLaboIII.Data.Interfaces.CarreraDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Carrera;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Map;
 
-@Service
+@Repository
 public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraDataInterface {
 
     @Override
@@ -61,12 +62,15 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
         if (!lista.containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        Carrera carrera = (Carrera) lista.get(idCarrera);
+        Carrera carrera = lista.get(idCarrera);
         return carrera.getMateriasList();
     }
 
     @Override
     public Map<Integer, Carrera> obtenerListaCarrera() {
+        if (lista.isEmpty()) {
+            throw new NoHayCarrerasException();
+        }
         return lista;
     }
 }

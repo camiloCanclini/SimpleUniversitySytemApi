@@ -14,11 +14,12 @@ import java.util.Map;
 @Service
 public class MateriaBusiness implements MateriaBusinessInterface {
     @Autowired
-    private static MateriaData materiaData;
+     MateriaData materiaData;
 
     @Override
     public int crearMateria(@NonNull MateriaDto materia) {
-        return materiaData.crearMateria(new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<Materia>()));
+        Materia nuevaMateria = new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<>());
+        return materiaData.crearMateria(nuevaMateria);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class MateriaBusiness implements MateriaBusinessInterface {
 
     @Override
     public void editarMateria(int idMateria, MateriaDto materia) {
-        materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<Materia>()));
+        materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<>()));
     }
 
     @Override

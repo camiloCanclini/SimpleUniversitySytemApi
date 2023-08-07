@@ -3,19 +3,21 @@ package com.canclini.finalLaboIII.Data.Implementations;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Interfaces.MateriaDataInterface;
+import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
+import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Materia;
 
 import java.util.*;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+@Slf4j
+@Repository
+public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaDataInterface{
 
-@Service
-public class MateriaData  implements MateriaDataInterface{
-    public static HashMap<Integer, Materia> listaMaterias = new HashMap<>();
-    private static int contadorIds;
-
-    public static enum OrderMateriaBy{
+    public enum OrderMateriaBy{
         nombre_asc,
         nombre_desc,
         codigo_asc,
@@ -24,50 +26,51 @@ public class MateriaData  implements MateriaDataInterface{
 
     @Override
     public int crearMateria(@NonNull Materia materia) {
-        int idMateria = contadorIds++;
-        listaMaterias.put(idMateria,materia);
+        log.info(String.valueOf(materia));
+        int idMateria = generarId();
+        lista.put(idMateria,materia);
         return idMateria;
     }
 
     @Override
     public void borrarMateria(int idMateria) {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!listaMaterias.containsKey(idMateria)) {
+        if (!lista.containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        listaMaterias.remove(idMateria);
+        lista.remove(idMateria);
     }
 
     @Override
     public void editarMateria(int idMateria, Materia materia) {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!listaMaterias.containsKey(idMateria)) {
+        if (!lista.containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        listaMaterias.replace(idMateria, materia);
+        lista.replace(idMateria, materia);
     }
 
     @Override
     public Materia buscarMateriaById(int idMateria) {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!listaMaterias.containsKey(idMateria)) {
+        if (!lista.containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        return listaMaterias.get(idMateria);
+        return lista.get(idMateria);
     }
 
     @Override
     public Materia buscarMateriabyNombre(String nombreMateria) {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        for (Materia materia: listaMaterias.values()) {
+        for (Materia materia: lista.values()) {
             if (materia.getNombre().equals(nombreMateria))
                 return materia;
         }
@@ -76,18 +79,18 @@ public class MateriaData  implements MateriaDataInterface{
 
     @Override
     public Map<Integer, Materia> obtenerListaMaterias() {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        return listaMaterias;
+        return lista;
     }
 
     @Override
     public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(OrderMateriaBy order) {
-        if (listaMaterias.isEmpty()) {
+        if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
-        List<Map.Entry<Integer, Materia>> listaMateriasOrdenada = new ArrayList<>(listaMaterias.entrySet());
+        List<Map.Entry<Integer, Materia>> listaMateriasOrdenada = new ArrayList<>(lista.entrySet());
         // Comparador para ordenar por nombre y, en caso de empate, por código (ID del mapa)
         Comparator<Map.Entry<Integer, Materia>> comparador = Comparator
                 .comparing((Map.Entry<Integer, Materia> entry) -> entry.getValue().getNombre())

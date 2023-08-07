@@ -22,8 +22,8 @@ import java.util.Map;
 public class AlumnoBusiness implements AlumnoBusinessInterface {
     @Autowired
     AlumnoData alumnoData;
-
-    Map<Integer, Materia> listaMaterias = MateriaData.listaMaterias;
+    @Autowired
+    MateriaData materiaData;
     @Override
     public int crearAlumno(AlumnoDto alumnodto){
         Alumno alumno = new Alumno();
@@ -63,7 +63,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
 
     @Override
     public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) {
-        if (!listaMaterias.containsKey(asignaturaDto.getIdMateria())) {
+        if (!materiaData.obtenerListaMaterias().containsKey(asignaturaDto.getIdMateria())) {
             throw new MateriaNoEncontradaException();
         }
         Asignatura asignatura = new Asignatura(asignaturaDto.getIdMateria(), Asignatura.Estado.NO_CURSADA, null);

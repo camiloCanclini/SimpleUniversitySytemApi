@@ -4,10 +4,11 @@ import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoExcepti
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
 import com.canclini.finalLaboIII.Data.Interfaces.DepartamentoDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-@Service
+@Repository
 public class DepartamentoData extends MemoryDataAbstract<String> implements DepartamentoDataInterface {
 
 

@@ -7,14 +7,16 @@ import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Materia;
 import com.canclini.finalLaboIII.Entity.Profesor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-@Service
+@Repository
 public class ProfesorData extends MemoryDataAbstract<Profesor> implements ProfesorDataInterface{
 
-    HashMap<Integer, Materia> listaMaterias = MateriaData.listaMaterias;
+    @Autowired
+    MateriaData materiaData;
     @Override
     public int crearProfesor(Profesor profesor) {
         int idProfesor = generarId();
@@ -35,7 +37,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
-        if (!listaMaterias.containsKey(idMateria)) {
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
         lista.get(idProfesor).getMateriasDictadas().add(idMateria);
@@ -45,7 +47,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
-        if (!listaMaterias.containsKey(idMateria)) {
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
         lista.get(idProfesor).getMateriasDictadas().remove(idMateria);
