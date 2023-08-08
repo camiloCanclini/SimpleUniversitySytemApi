@@ -1,6 +1,8 @@
 package com.canclini.finalLaboIII.Data.Implementations;
 
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Interfaces.ProfesorDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
@@ -25,7 +27,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
     }
 
     @Override
-    public void borrarProfesor(int idProfesor) {
+    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
@@ -33,7 +35,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
     }
 
     @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) {
+    public void agregarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
@@ -43,7 +45,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         lista.get(idProfesor).getMateriasDictadas().add(idMateria);
     }
     @Override
-    public void borrarMateria(int idProfesor, Integer idMateria) {
+    public void borrarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
@@ -53,7 +55,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         lista.get(idProfesor).getMateriasDictadas().remove(idMateria);
     }
     @Override
-    public Profesor buscarProfesorById(int idProfesor) {
+    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException {
         if (!lista.containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
@@ -62,7 +64,10 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
     }
 
     @Override
-    public Map<Integer, Profesor> obtenerListaProfesor() {
+    public Map<Integer, Profesor> obtenerListaProfesor() throws NoHayProfesoresException {
+        if (lista.isEmpty()) {
+            throw new NoHayProfesoresException();
+        }
         return lista;
     }
 }

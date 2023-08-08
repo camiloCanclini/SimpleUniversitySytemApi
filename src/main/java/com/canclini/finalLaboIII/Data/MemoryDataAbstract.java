@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class MemoryDataAbstract<T> {
-    protected static int contadorId = 0;
+    protected int contadorId = 0;
     protected int generarId(){
         return contadorId++;
     }

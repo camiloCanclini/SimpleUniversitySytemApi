@@ -22,7 +22,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public void borrarCarrera(int idCarrera) {
+    public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }
@@ -33,7 +33,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public void editarCarrera(int idCarrera, Carrera carrera) {
+    public void editarCarrera(int idCarrera, Carrera carrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }
@@ -44,7 +44,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public Carrera buscarCarreraById(int idCarrera) {
+    public Carrera buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }
@@ -55,7 +55,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) {
+    public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }
@@ -67,7 +67,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
     }
 
     @Override
-    public Map<Integer, Carrera> obtenerListaCarrera() {
+    public Map<Integer, Carrera> obtenerListaCarrera() throws NoHayCarrerasException {
         if (lista.isEmpty()) {
             throw new NoHayCarrerasException();
         }

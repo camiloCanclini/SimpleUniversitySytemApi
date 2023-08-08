@@ -6,6 +6,7 @@ import com.canclini.finalLaboIII.Business.Implementations.MateriaBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData.OrderMateriaBy;
+import com.canclini.finalLaboIII.Entity.Materia;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -23,65 +27,73 @@ public class MateriaController {
     @Autowired
     private MateriaBusiness materiaBusiness;
     @GetMapping("/materia")
-    public ResponseEntity<?> getMateriaByNombre(@Nullable @RequestParam String nombre){
+    public ResponseEntity<ResponseDtoJson> getMateriaByNombre(@Nullable @RequestParam String nombre){
         if (nombre == null || nombre.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "Ingrese co", null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "Ingrese el nombre de la Materia", null));
         }
         try{
-            return ResponseEntity.ok(materiaBusiness.buscarMateriaByNombre(nombre));
+            Materia materia = materiaBusiness.buscarMateriaByNombre(nombre);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "Materia Encontrada", materia));
         }
         catch (NoHayMateriasException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay Materias");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
         }
         catch (MateriaNoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la materia");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se ha encontrado la Materia", null));
         }
-        catch (RuntimeException e){
-            return ResponseEntity.notFound().build();
-        }
-
     }
     @GetMapping("/materias")
-    public ResponseEntity<?> getMateriasByFiltro(@Nullable @RequestParam String order){
+    public ResponseEntity<ResponseDtoJson> getMateriasByFiltro(@Nullable @RequestParam String order){
         try {
             if (order == null || order.isEmpty()) {
-                return ResponseEntity.ok(materiaBusiness.obtenerListaMaterias());
+                Map<Integer, Materia> listaMaterias = materiaBusiness.obtenerListaMaterias();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Lista de Materias sin ORDER", listaMaterias));
             }
             OrderMateriaBy orderBy = OrderMateriaBy.valueOf(order.toLowerCase());
-            return ResponseEntity.ok(materiaBusiness.obtenerListaMateriasOrderedBy(orderBy));
+            List<Map.Entry<Integer, Materia>> listaMateriasOrdenadas = materiaBusiness.obtenerListaMateriasOrderedBy(orderBy);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "Lista de Materias con ORDER", listaMateriasOrdenadas));
         } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body("Los Tipos de Ordenamientos disponibles son: "+ Arrays.toString(OrderMateriaBy.values()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese un tipo de ordenamiento(order)", Arrays.toString(OrderMateriaBy.values())));
         }
         catch (NoHayMateriasException e){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Hay Materias Cargadas");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
         }
     }
     @PostMapping("/materia")
-    public ResponseEntity<?> crearMateria(@Nullable @RequestBody @Valid MateriaDto materia){
-        if (materia == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
+    public ResponseEntity<ResponseDtoJson> crearMateria(@Nullable @RequestBody @Valid MateriaDto materiadto){
+        if (materiadto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la materia", null));
         }
-        return ResponseEntity.ok(materiaBusiness.crearMateria(materia));
+        int materiaId = materiaBusiness.crearMateria(materiadto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "Materia Creada Correctamente", materiaId));
     }
     @PutMapping("/materia/{idMateria}")
-    public ResponseEntity<?> editarMateria(@Nullable @RequestBody @Valid MateriaDto materia, @PathVariable Integer idMateria){
+    public ResponseEntity<ResponseDtoJson> editarMateria(@Nullable @RequestBody @Valid MateriaDto materia, @PathVariable Integer idMateria){
         if (materia == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Especifique Correctamente los datos de la materia");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la materia", null));
         }
         try{
             materiaBusiness.editarMateria(idMateria, materia);
-        }catch (MateriaNoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la materia");
         }
-        return ResponseEntity.ok("Se a Editado la Materia Correctamente");
+        catch (NoHayMateriasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
+        }
+        catch (MateriaNoEncontradaException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "Materia No Encontrada", null));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "Materia Editada Correctamente", null));
     }
     @DeleteMapping("/materia/{idMateria}")
-    public ResponseEntity<?> eliminarMateria(@PathVariable Integer idMateria){
+    public ResponseEntity<ResponseDtoJson> eliminarMateria(@PathVariable Integer idMateria){
         try{
             materiaBusiness.borrarMateria(idMateria);
-        }catch (MateriaNoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se a encontrado la materia");
         }
-        return ResponseEntity.ok("Materia Eliminada Correctamente");
+        catch (NoHayMateriasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
+        }
+        catch (MateriaNoEncontradaException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se ha encontrado la Materia", null));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "La Materia Se Ha Eliminado Correctamente", null));
     }
 }

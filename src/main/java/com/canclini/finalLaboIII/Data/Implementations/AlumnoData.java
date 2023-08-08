@@ -24,7 +24,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
     }
 
     @Override
-    public void borrarAlumno(int idAlumno){
+    public void borrarAlumno(int idAlumno) throws AlumnoNoEncontradoException {
         if (!lista.containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException( );
         }
@@ -32,7 +32,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
     }
 
     @Override
-    public void editarAlumno(int idAlumno, @NonNull Alumno alumno) {
+    public void editarAlumno(int idAlumno, @NonNull Alumno alumno) throws AlumnoNoEncontradoException {
         if (!lista.containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException();
         }
@@ -40,7 +40,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
     }
 
     @Override
-    public Alumno buscarAlumnoById(int idAlumno) {
+    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException {
         if (!lista.containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException();
         }
@@ -48,7 +48,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
     }
 
     @Override
-    public Map<Integer, Alumno> obtenerListaAlumnos() {
+    public Map<Integer, Alumno> obtenerListaAlumnos() throws NoHayAlumnosException {
         if (lista.isEmpty()) {
             throw new NoHayAlumnosException();
         }
@@ -58,7 +58,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
 
 
     @Override
-    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) {
+    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) throws AlumnoNoEncontradoException {
         if (!lista.containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException();
         }
@@ -69,7 +69,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
     }
 
     @Override
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) {
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) throws AlumnoNoEncontradoException, AsignaturaNoEncontradaException {
         if (!lista.containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException();
         }

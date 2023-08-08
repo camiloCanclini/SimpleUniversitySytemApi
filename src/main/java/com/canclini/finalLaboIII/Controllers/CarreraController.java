@@ -77,10 +77,14 @@ public class CarreraController {
         }
         try{
             carreraBusiness.editarCarrera(idCarrera, carrera);
+        }
+        catch (NoHayDepartamentosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Departamentos Cargados", null));
+        }
+        catch (NoHayCarrerasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Carreras Cargadas", null));
         }catch (CarreraNoEncontradaException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se a encontrado la carrera", idCarrera));
-        } catch (NoHayDepartamentosException e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Departamentos Cargados", null));
         } catch (DepartamentoNoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No Se Ha Encontrado El Departamento", null));
         }
@@ -91,7 +95,9 @@ public class CarreraController {
         try{
             carreraBusiness.borrarCarrera(idCarrera);
         }catch (CarreraNoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.OK, "Carrera no encontrada", null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "Carrera no encontrada", null));
+        } catch (NoHayCarrerasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Carreras Cargadas", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Carrera Eliminada Correctamente", null));
     }

@@ -41,7 +41,7 @@ public class DepartamentoController {
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Departamento Creado Exitosamente", idDepa));
     }
     @DeleteMapping("/departamento/{idDepa}")
-    public ResponseEntity<ResponseDtoJson> eliminarAlumno(@PathVariable Integer idDepa){
+    public ResponseEntity<ResponseDtoJson> eliminarDepa(@PathVariable Integer idDepa){
         try{
             departamentoBusiness.borrarDepartamento(idDepa);
         }catch (NoHayDepartamentosException e){

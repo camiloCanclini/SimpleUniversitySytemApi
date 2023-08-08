@@ -6,10 +6,7 @@ import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaDto;
 import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaEditarDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.AlumnoBusiness;
-import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
-import com.canclini.finalLaboIII.Data.Exceptions.AsignaturaNoEncontradaException;
-import com.canclini.finalLaboIII.Data.Exceptions.EstadoAsignaturaNoPermitidoException;
-import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
+import com.canclini.finalLaboIII.Data.Exceptions.*;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
 import jakarta.annotation.Nullable;
@@ -81,6 +78,10 @@ public class AlumnoController {
             return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "La asignatura se añadió correctamente", idAsignatura));
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
+        } catch (MateriaNoEncontradaException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
+        } catch (NoHayMateriasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
         }
     }
     @PutMapping("/alumno/{idAlumno}/asignatura/{idAsignatura}")

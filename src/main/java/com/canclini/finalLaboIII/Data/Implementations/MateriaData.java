@@ -33,7 +33,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public void borrarMateria(int idMateria) {
+    public void borrarMateria(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
@@ -44,7 +44,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public void editarMateria(int idMateria, Materia materia) {
+    public void editarMateria(int idMateria, Materia materia) throws NoHayMateriasException, MateriaNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
@@ -55,7 +55,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public Materia buscarMateriaById(int idMateria) {
+    public Materia buscarMateriaById(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
@@ -66,7 +66,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public Materia buscarMateriabyNombre(String nombreMateria) {
+    public Materia buscarMateriabyNombre(String nombreMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
@@ -78,7 +78,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public Map<Integer, Materia> obtenerListaMaterias() {
+    public Map<Integer, Materia> obtenerListaMaterias() throws NoHayMateriasException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }
@@ -86,7 +86,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
     }
 
     @Override
-    public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(OrderMateriaBy order) {
+    public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(OrderMateriaBy order) throws NoHayMateriasException, IllegalArgumentException {
         if (lista.isEmpty()) {
             throw new NoHayMateriasException();
         }

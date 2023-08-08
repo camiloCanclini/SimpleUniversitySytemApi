@@ -5,9 +5,7 @@ import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoEditarDto;
 import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaDto;
 import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaEditarDto;
 import com.canclini.finalLaboIII.Business.Interfaces.AlumnoBusinessInterface;
-import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
-import com.canclini.finalLaboIII.Data.Exceptions.EstadoAsignaturaNoPermitidoException;
-import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.*;
 import com.canclini.finalLaboIII.Data.Implementations.AlumnoData;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Alumno;
@@ -35,12 +33,12 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public void borrarAlumno(int idAlumno) {
+    public void borrarAlumno(int idAlumno) throws AlumnoNoEncontradoException {
         alumnoData.borrarAlumno(idAlumno);
     }
 
     @Override
-    public void editarAlumno(int idAlumno, AlumnoEditarDto alumnodto) {
+    public void editarAlumno(int idAlumno, AlumnoEditarDto alumnodto) throws AlumnoNoEncontradoException {
         Alumno alumno = alumnoData.buscarAlumnoById(idAlumno);
         if (!(alumnodto.getNombre() == null)) {
             alumno.setNombre(alumnodto.getNombre());
@@ -52,17 +50,17 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public Alumno buscarAlumnoById(int idAlumno) {
+    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException {
         return alumnoData.buscarAlumnoById(idAlumno);
     }
 
     @Override
-    public Map<Integer, Alumno> obtenerListaAlumnos() {
+    public Map<Integer, Alumno> obtenerListaAlumnos() throws NoHayAlumnosException {
         return alumnoData.obtenerListaAlumnos();
     }
 
     @Override
-    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) {
+    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) throws MateriaNoEncontradaException, AlumnoNoEncontradoException, NoHayMateriasException {
         if (!materiaData.obtenerListaMaterias().containsKey(asignaturaDto.getIdMateria())) {
             throw new MateriaNoEncontradaException();
         }
@@ -71,7 +69,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException {
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException {
         Asignatura.Estado estado;
         try {
            estado = Asignatura.Estado.valueOf(asignaturaEditarDto.getEstado());

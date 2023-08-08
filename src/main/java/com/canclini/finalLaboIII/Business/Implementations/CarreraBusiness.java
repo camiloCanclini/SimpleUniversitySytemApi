@@ -2,7 +2,9 @@ package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
 import com.canclini.finalLaboIII.Business.Interfaces.CarreraBusinessInterface;
+import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
 import com.canclini.finalLaboIII.Data.Implementations.CarreraData;
 import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
@@ -28,12 +30,12 @@ public class CarreraBusiness implements CarreraBusinessInterface {
     }
 
     @Override
-    public void borrarCarrera(int idCarrera) {
+    public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         carreraData.borrarCarrera(idCarrera);
     }
 
     @Override
-    public void editarCarrera(int idCarrera, CarreraDto carreraDto) throws NoHayDepartamentosException, DepartamentoNoEncontradoException {
+    public void editarCarrera(int idCarrera, CarreraDto carreraDto) throws NoHayDepartamentosException, DepartamentoNoEncontradoException, NoHayCarrerasException, CarreraNoEncontradaException {
         if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {
             throw new DepartamentoNoEncontradoException();
         }
@@ -49,17 +51,17 @@ public class CarreraBusiness implements CarreraBusinessInterface {
     }
 
     @Override
-    public Carrera buscarCarreraById(int idCarrera) {
+    public Carrera buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         return carreraData.buscarCarreraById(idCarrera);
     }
 
     @Override
-    public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) {
+    public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
         return carreraData.obtenerListaMateriaDeCarrera(idCarrera);
     }
 
     @Override
-    public Map<Integer, Carrera> obtenerListaCarrera() {
+    public Map<Integer, Carrera> obtenerListaCarrera() throws NoHayCarrerasException {
         return carreraData.obtenerListaCarrera();
     }
 }

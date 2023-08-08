@@ -2,6 +2,8 @@ package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Business.Interfaces.MateriaBusinessInterface;
+import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Materia;
 import lombok.NonNull;
@@ -23,32 +25,32 @@ public class MateriaBusiness implements MateriaBusinessInterface {
     }
 
     @Override
-    public void borrarMateria(int idMateria) {
+    public void borrarMateria(int idMateria) throws MateriaNoEncontradaException, NoHayMateriasException {
         materiaData.borrarMateria(idMateria);
     }
 
     @Override
-    public void editarMateria(int idMateria, MateriaDto materia) {
+    public void editarMateria(int idMateria, MateriaDto materia) throws MateriaNoEncontradaException, NoHayMateriasException {
         materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<>()));
     }
 
     @Override
-    public Materia buscarMateriaById(int idMateria) {
+    public Materia buscarMateriaById(int idMateria) throws MateriaNoEncontradaException, NoHayMateriasException {
         return materiaData.buscarMateriaById(idMateria);
     }
 
     @Override
-    public Materia buscarMateriaByNombre(String nombreMateria)  {
+    public Materia buscarMateriaByNombre(String nombreMateria) throws MateriaNoEncontradaException, NoHayMateriasException {
         return materiaData.buscarMateriabyNombre(nombreMateria);
     }
 
     @Override
-    public Map<Integer, Materia> obtenerListaMaterias() {
+    public Map<Integer, Materia> obtenerListaMaterias() throws NoHayMateriasException {
         return materiaData.obtenerListaMaterias();
     }
 
     @Override
-    public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(MateriaData.OrderMateriaBy order) {
+    public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(MateriaData.OrderMateriaBy order) throws NoHayMateriasException {
         return materiaData.obtenerListaMateriasOrderedBy(order);
     }
 

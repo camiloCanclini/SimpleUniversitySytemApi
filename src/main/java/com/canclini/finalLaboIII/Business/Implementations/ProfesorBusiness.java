@@ -2,6 +2,10 @@ package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorDto;
 import com.canclini.finalLaboIII.Business.Interfaces.ProfesorBusinessInterface;
+import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Implementations.ProfesorData;
 import com.canclini.finalLaboIII.Entity.Profesor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +30,26 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
     }
 
     @Override
-    public void borrarProfesor(int idProfesor) {
+    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException {
         profesorData.borrarProfesor(idProfesor);
     }
 
     @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) {
-
+    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException {
+        profesorData.agregarMateria(idProfesor, idMateria);
     }
 
-    public void borrarMateria(int idProfesor, Integer idMateria) {
-
+    public void borrarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException {
+        profesorData.borrarMateria(idProfesor, idMateria);
     }
 
     @Override
-    public Profesor buscarProfesorById(int idProfesor) {
+    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException {
         return profesorData.buscarProfesorById(idProfesor);
     }
 
     @Override
-    public Map<Integer, Profesor> obtenerListaProfesor() {
-        return null;
+    public Map<Integer, Profesor> obtenerListaProfesor() throws NoHayProfesoresException {
+        return profesorData.obtenerListaProfesor();
     }
 }

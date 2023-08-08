@@ -4,6 +4,8 @@ import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorDto;
 import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorMateriaDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.ProfesorBusiness;
+import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Entity.Profesor;
@@ -53,6 +55,10 @@ public class ProfesorController {
             profesorBusiness.agregarMateria(idProfesor, materia.getIdMateria());
         }catch (ProfesorNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el profesor", null));
+        } catch (MateriaNoEncontradaException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
+        } catch (NoHayMateriasException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No se encontró el profesor", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha agregado la materia al profesor", null));
     }
@@ -65,6 +71,10 @@ public class ProfesorController {
             profesorBusiness.borrarMateria(idProfesor, idMateria);
         }catch (ProfesorNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el profesor", null));
+        } catch (MateriaNoEncontradaException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
+        } catch (NoHayMateriasException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No Hay Materias Cargadas", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha borrado la materia al profesor", null));
     }
