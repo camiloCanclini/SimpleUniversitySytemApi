@@ -58,7 +58,9 @@ public class ProfesorController {
         } catch (MateriaNoEncontradaException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
         } catch (NoHayMateriasException e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No se encontró el profesor", null));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No hay materias cargadas", null));
+        } catch (NoHayProfesoresException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No hay profesores cargados", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha agregado la materia al profesor", null));
     }
@@ -84,6 +86,8 @@ public class ProfesorController {
             profesorBusiness.borrarProfesor(idProfesor);
         }catch (ProfesorNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el profesor", null));
+        } catch (NoHayProfesoresException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No hay profesores cargados", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Profesor Eliminado Exitosamente", null));
     }

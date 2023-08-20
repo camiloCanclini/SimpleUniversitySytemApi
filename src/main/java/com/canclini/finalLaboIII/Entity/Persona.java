@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public abstract class Persona {
     private String nombre;
     private String apellido;

@@ -27,26 +27,26 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
     }
 
     @Override
-    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException {
-        if (!lista.containsKey(idProfesor)) {
+    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {
+        if (!obtenerListaProfesor().containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
         lista.remove(idProfesor);
     }
 
     @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException {
-        if (!lista.containsKey(idProfesor)) {
+    public void agregarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException, NoHayProfesoresException {
+        if (!obtenerListaProfesor().containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
         if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        lista.get(idProfesor).getMateriasDictadas().add(idMateria);
+        obtenerListaProfesor().get(idProfesor).getMateriasDictadas().add(idMateria);
     }
     @Override
     public void borrarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException {
-        if (!lista.containsKey(idProfesor)) {
+        if (!materiaData.obtenerListaMaterias().containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
         if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
@@ -55,12 +55,11 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         lista.get(idProfesor).getMateriasDictadas().remove(idMateria);
     }
     @Override
-    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException {
-        if (!lista.containsKey(idProfesor)) {
+    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {
+        if (!obtenerListaProfesor().containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
-
-        return lista.get(idProfesor);
+        return obtenerListaProfesor().get(idProfesor);
     }
 
     @Override

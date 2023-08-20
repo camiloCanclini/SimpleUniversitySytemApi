@@ -30,12 +30,12 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
     }
 
     @Override
-    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException {
+    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {
         profesorData.borrarProfesor(idProfesor);
     }
 
     @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException {
+    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
         profesorData.agregarMateria(idProfesor, idMateria);
     }
 
@@ -44,7 +44,7 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
     }
 
     @Override
-    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException {
+    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {
         return profesorData.buscarProfesorById(idProfesor);
     }
 

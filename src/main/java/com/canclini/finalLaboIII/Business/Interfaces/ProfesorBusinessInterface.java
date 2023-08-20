@@ -11,9 +11,9 @@ import java.util.Map;
 
 public interface ProfesorBusinessInterface {
     public int crearProfesor(ProfesorDto profesor);
-    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException;
-    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException;
+    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException;
+    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException;
     public void borrarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException;
-    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException;
+    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException;
     public Map<Integer, Profesor> obtenerListaProfesor() throws NoHayProfesoresException;
 }
