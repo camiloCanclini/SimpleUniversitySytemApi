@@ -34,43 +34,43 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
 
     @Override
     public void borrarMateria(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaMaterias().isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!lista.containsKey(idMateria)) {
+        if (!obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        lista.remove(idMateria);
+        obtenerListaMaterias().remove(idMateria);
     }
 
     @Override
     public void editarMateria(int idMateria, Materia materia) throws NoHayMateriasException, MateriaNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaMaterias().isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!lista.containsKey(idMateria)) {
+        if (!obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        lista.replace(idMateria, materia);
+        obtenerListaMaterias().replace(idMateria, materia);
     }
 
     @Override
     public Materia buscarMateriaById(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaMaterias().isEmpty()) {
             throw new NoHayMateriasException();
         }
-        if (!lista.containsKey(idMateria)) {
+        if (!obtenerListaMaterias().containsKey(idMateria)) {
             throw new MateriaNoEncontradaException();
         }
-        return lista.get(idMateria);
+        return obtenerListaMaterias().get(idMateria);
     }
 
     @Override
     public Materia buscarMateriabyNombre(String nombreMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaMaterias().isEmpty()) {
             throw new NoHayMateriasException();
         }
-        for (Materia materia: lista.values()) {
+        for (Materia materia: obtenerListaMaterias().values()) {
             if (materia.getNombre().equals(nombreMateria))
                 return materia;
         }
@@ -87,10 +87,10 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
 
     @Override
     public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(OrderMateriaBy order) throws NoHayMateriasException, IllegalArgumentException {
-        if (lista.isEmpty()) {
+        if (obtenerListaMaterias().isEmpty()) {
             throw new NoHayMateriasException();
         }
-        List<Map.Entry<Integer, Materia>> listaMateriasOrdenada = new ArrayList<>(lista.entrySet());
+        List<Map.Entry<Integer, Materia>> listaMateriasOrdenada = new ArrayList<>(obtenerListaMaterias().entrySet());
         // Comparador para ordenar por nombre y, en caso de empate, por código (ID del mapa)
         Comparator<Map.Entry<Integer, Materia>> comparador = Comparator
                 .comparing((Map.Entry<Integer, Materia> entry) -> entry.getValue().getNombre())

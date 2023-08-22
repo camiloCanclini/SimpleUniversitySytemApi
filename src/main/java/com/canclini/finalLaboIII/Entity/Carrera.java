@@ -1,9 +1,6 @@
 package com.canclini.finalLaboIII.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Carrera {
     private String nombre;
     private int cantidadAnios;

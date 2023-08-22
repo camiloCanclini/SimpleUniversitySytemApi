@@ -23,46 +23,46 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
 
     @Override
     public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaCarrera().isEmpty()) {
             throw new NoHayCarrerasException();
         }
-        if (!lista.containsKey(idCarrera)) {
+        if (!obtenerListaCarrera().containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        lista.remove(idCarrera);
+        obtenerListaCarrera().remove(idCarrera);
     }
 
     @Override
     public void editarCarrera(int idCarrera, Carrera carrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaCarrera().isEmpty()) {
             throw new NoHayCarrerasException();
         }
-        if (!lista.containsKey(idCarrera)) {
+        if (!obtenerListaCarrera().containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        lista.replace(idCarrera,carrera);
+        obtenerListaCarrera().replace(idCarrera,carrera);
     }
 
     @Override
     public Carrera buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaCarrera().isEmpty()) {
             throw new NoHayCarrerasException();
         }
-        if (!lista.containsKey(idCarrera)) {
+        if (!obtenerListaCarrera().containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        return (Carrera) lista.get(idCarrera);
+        return (Carrera) obtenerListaCarrera().get(idCarrera);
     }
 
     @Override
     public HashSet<Integer> obtenerListaMateriaDeCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
-        if (lista.isEmpty()) {
+        if (obtenerListaCarrera().isEmpty()) {
             throw new NoHayCarrerasException();
         }
-        if (!lista.containsKey(idCarrera)) {
+        if (!obtenerListaCarrera().containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        Carrera carrera = lista.get(idCarrera);
+        Carrera carrera = obtenerListaCarrera().get(idCarrera);
         return carrera.getMateriasList();
     }
 

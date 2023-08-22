@@ -84,13 +84,13 @@ class ProfesorBusinessTest {
 
     }
 
-    @Test
+    /*@Test
     void agregarMateria() throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
-    }
+    }*/
 
-    @Test
+    /*@Test
     void borrarMateria() {
-    }
+    }*/
 
     @Test
     void buscarProfesorById() throws ProfesorNoEncontradoException, NoHayProfesoresException {
@@ -102,8 +102,8 @@ class ProfesorBusinessTest {
         assertNotNull(profesor);
     }
 
-    @Test
+    /*@Test
     void obtenerListaProfesor() {
 
-    }
+    }*/
 }

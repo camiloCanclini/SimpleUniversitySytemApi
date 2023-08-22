@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -20,7 +21,7 @@ public class MateriaBusiness implements MateriaBusinessInterface {
 
     @Override
     public int crearMateria(@NonNull MateriaDto materia) {
-        Materia nuevaMateria = new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<>());
+        Materia nuevaMateria = new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new HashSet<>());
         return materiaData.crearMateria(nuevaMateria);
     }
 
@@ -31,7 +32,7 @@ public class MateriaBusiness implements MateriaBusinessInterface {
 
     @Override
     public void editarMateria(int idMateria, MateriaDto materia) throws MateriaNoEncontradaException, NoHayMateriasException {
-        materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new ArrayList<>()));
+        materiaData.editarMateria(idMateria, new Materia(materia.getNombre(), materia.getAnio(), materia.getCuatrimestre(), null, new HashSet<>()));
     }
 
     @Override

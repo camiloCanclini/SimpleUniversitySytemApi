@@ -37,8 +37,13 @@ public class DepartamentoController {
         if (departamentoDto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique el nombre del departamento", null));
         }
-        Integer idDepa = departamentoBusiness.crearDepartamento(departamentoDto);
-        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Departamento Creado Exitosamente", idDepa));
+        try{
+            Integer idDepa = departamentoBusiness.crearDepartamento(departamentoDto);
+            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Departamento Creado Exitosamente", idDepa));
+        } catch (NoHayDepartamentosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Departamentos Cargados", null));
+        }
+
     }
     @DeleteMapping("/departamento/{idDepa}")
     public ResponseEntity<ResponseDtoJson> eliminarDepa(@PathVariable Integer idDepa){

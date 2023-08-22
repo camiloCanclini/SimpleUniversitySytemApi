@@ -14,7 +14,7 @@ public class DepartamentoBusiness implements DepartamentosBusinessInterface {
     @Autowired
     DepartamentoData departamentoData;
     @Override
-    public int crearDepartamento(DepartamentoDto departamentoDto) {
+    public int crearDepartamento(DepartamentoDto departamentoDto) throws NoHayDepartamentosException {
         return departamentoData.crearDepartamento(departamentoDto.getNombre());
     }
 

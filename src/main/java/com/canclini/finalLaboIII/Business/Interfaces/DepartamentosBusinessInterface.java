@@ -7,7 +7,7 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
 import java.util.Map;
 
 public interface DepartamentosBusinessInterface {
-    public int crearDepartamento(DepartamentoDto departamentoDto);
+    public int crearDepartamento(DepartamentoDto departamentoDto) throws NoHayDepartamentosException;
     public void borrarDepartamento(Integer idDepa) throws DepartamentoNoEncontradoException, NoHayDepartamentosException;
     public Map<Integer, String> obtenerListaDepartamentos() throws NoHayDepartamentosException;
 }

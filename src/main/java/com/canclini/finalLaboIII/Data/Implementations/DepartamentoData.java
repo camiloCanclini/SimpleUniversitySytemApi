@@ -13,7 +13,7 @@ public class DepartamentoData extends MemoryDataAbstract<String> implements Depa
 
 
     @Override
-    public int crearDepartamento(String nombreDepa) {
+    public int crearDepartamento(String nombreDepa){
         int id = generarId();
         lista.put(id, nombreDepa);
         return id;
@@ -21,13 +21,13 @@ public class DepartamentoData extends MemoryDataAbstract<String> implements Depa
 
     @Override
     public void borrarDepartamento(Integer idDepa) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
-        if (lista.isEmpty()) {
+        if (obtenerListaDepartamentos().isEmpty()) {
             throw new NoHayDepartamentosException();
         }
-        if (!lista.containsKey(idDepa)) {
+        if (!obtenerListaDepartamentos().containsKey(idDepa)) {
             throw new DepartamentoNoEncontradoException();
         }
-        lista.remove(idDepa);
+        obtenerListaDepartamentos().remove(idDepa);
     }
 
     @Override
