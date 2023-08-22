@@ -11,11 +11,11 @@ import com.canclini.finalLaboIII.Entity.Asignatura;
 import java.util.Map;
 
 public interface AlumnoBusinessInterface {
-    public int crearAlumno(AlumnoDto alumno);
-    public void borrarAlumno(int idAlumon) throws AlumnoNoEncontradoException;
-    public void editarAlumno(int idAlumno, AlumnoEditarDto alumno) throws AlumnoNoEncontradoException;
-    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException;
+    public int crearAlumno(AlumnoDto alumno) throws NoHayAlumnosException;
+    public void borrarAlumno(int idAlumon) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+    public void editarAlumno(int idAlumno, AlumnoEditarDto alumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
     public Map<Integer, Alumno> obtenerListaAlumnos() throws NoHayAlumnosException;
-    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignatura) throws MateriaNoEncontradaException, AlumnoNoEncontradoException, NoHayMateriasException;
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException;
+    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignatura) throws MateriaNoEncontradaException, AlumnoNoEncontradoException, NoHayMateriasException, NoHayAlumnosException;
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException, NoHayAlumnosException;
 }

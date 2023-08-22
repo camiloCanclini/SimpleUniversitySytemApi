@@ -50,12 +50,7 @@ class CarreraBusinessTest {
         carrera2.setNombre("Ingenieria Informatica");
         carrera2.setCantidadAnios(5);
         carrera2.setDepartamentoId(2);
-        carrera2.setMateriasList(new HashSet<>(){{
-            add(1);
-            add(2);
-            add(5);
-            add(6);
-        }});
+        carrera2.setMateriasList(new HashSet<>());
 
 
         HashMap<Integer, Carrera> listaCarrera = new HashMap<>();
@@ -142,13 +137,28 @@ class CarreraBusinessTest {
 
     @Test
     void buscarCarreraById() {
+        assertDoesNotThrow(()->{
+            carreraBusiness.buscarCarreraById(0);
+        });
+        assertThrows(CarreraNoEncontradaException.class, ()->{
+            carreraBusiness.buscarCarreraById(4);
+        });
     }
-
     @Test
-    void obtenerListaMateriaDeCarrera() {
+    void obtenerListaMateriaDeCarrera() throws NoHayCarrerasException, CarreraNoEncontradaException {
+        assertDoesNotThrow(()->{
+            carreraBusiness.obtenerListaMateriaDeCarrera(0);
+        });
+        assertThrows(CarreraNoEncontradaException.class, ()->{
+            carreraBusiness.obtenerListaMateriaDeCarrera(4);
+        });
+        HashSet<Integer> listaMaterias = carreraBusiness.obtenerListaMateriaDeCarrera(0);
+        assertNotNull(listaMaterias);
     }
-
+    /*
     @Test
     void obtenerListaCarrera() {
     }
+    */
+
 }

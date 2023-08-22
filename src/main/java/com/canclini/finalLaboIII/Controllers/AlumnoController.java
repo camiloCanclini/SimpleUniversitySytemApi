@@ -43,7 +43,7 @@ public class AlumnoController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
     }
     Integer idNuevoAlumno = alumnoBusiness.crearAlumno(alumno);
-    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno creado exitosamente", idNuevoAlumno));
+    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno creado exitosamente", null));
 
     }
     @PutMapping("/alumno/{idAlumno}")
@@ -55,6 +55,8 @@ public class AlumnoController {
             alumnoBusiness.editarAlumno(idAlumno, alumno);
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
+        } catch (NoHayAlumnosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha editado correctamente el alumno", null));
     }
@@ -64,6 +66,8 @@ public class AlumnoController {
             alumnoBusiness.borrarAlumno(idAlumno);
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
+        } catch (NoHayAlumnosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno Eliminado Exitosamente", null));
     }
@@ -82,6 +86,8 @@ public class AlumnoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
         } catch (NoHayMateriasException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Materias Cargadas", null));
+        } catch (NoHayAlumnosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
         }
     }
     @PutMapping("/alumno/{idAlumno}/asignatura/{idAsignatura}")
@@ -94,6 +100,8 @@ public class AlumnoController {
         }
         catch (AsignaturaNoEncontradaException | EstadoAsignaturaNoPermitidoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la Asignatura", null));
+        } catch (NoHayAlumnosException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Estado de asignatura cambiado correctamente", null));
     }

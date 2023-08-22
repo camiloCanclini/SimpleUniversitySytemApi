@@ -10,13 +10,13 @@ import com.canclini.finalLaboIII.Entity.Materia;
 import java.util.Map;
 
 public interface AlumnoDataInterface {
-    public int crearAlumno(Alumno alumno);
-    public void borrarAlumno(int idAlumon) throws AlumnoNoEncontradoException;
-    public void editarAlumno(int idAlumno, Alumno alumno) throws AlumnoNoEncontradoException;
-    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException;
+    public int crearAlumno(Alumno alumno) throws NoHayAlumnosException;
+    public void borrarAlumno(int idAlumon) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+    public void editarAlumno(int idAlumno, Alumno alumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
     public Map<Integer, Alumno> obtenerListaAlumnos() throws NoHayAlumnosException;
-    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) throws AlumnoNoEncontradoException;
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) throws AlumnoNoEncontradoException, AsignaturaNoEncontradaException;
+    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) throws AlumnoNoEncontradoException, AsignaturaNoEncontradaException, NoHayAlumnosException;
 
 
 }

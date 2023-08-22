@@ -62,7 +62,7 @@ public class CarreraData extends MemoryDataAbstract<Carrera> implements CarreraD
         if (!obtenerListaCarrera().containsKey(idCarrera)) {
             throw new CarreraNoEncontradaException();
         }
-        Carrera carrera = obtenerListaCarrera().get(idCarrera);
+        Carrera carrera = buscarCarreraById(idCarrera);
         return carrera.getMateriasList();
     }
 

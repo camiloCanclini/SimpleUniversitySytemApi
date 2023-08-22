@@ -33,12 +33,12 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public void borrarAlumno(int idAlumno) throws AlumnoNoEncontradoException {
+    public void borrarAlumno(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException {
         alumnoData.borrarAlumno(idAlumno);
     }
 
     @Override
-    public void editarAlumno(int idAlumno, AlumnoEditarDto alumnodto) throws AlumnoNoEncontradoException {
+    public void editarAlumno(int idAlumno, AlumnoEditarDto alumnodto) throws AlumnoNoEncontradoException, NoHayAlumnosException {
         Alumno alumno = alumnoData.buscarAlumnoById(idAlumno);
         if (!(alumnodto.getNombre() == null)) {
             alumno.setNombre(alumnodto.getNombre());
@@ -50,7 +50,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException {
+    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException {
         return alumnoData.buscarAlumnoById(idAlumno);
     }
 
@@ -60,7 +60,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) throws MateriaNoEncontradaException, AlumnoNoEncontradoException, NoHayMateriasException {
+    public int aniadirAsignatura(int idAlumno, AsignaturaDto asignaturaDto) throws MateriaNoEncontradaException, AlumnoNoEncontradoException, NoHayMateriasException, NoHayAlumnosException {
         if (!materiaData.obtenerListaMaterias().containsKey(asignaturaDto.getIdMateria())) {
             throw new MateriaNoEncontradaException();
         }
@@ -69,7 +69,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     }
 
     @Override
-    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException {
+    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException, NoHayAlumnosException {
         Asignatura.Estado estado;
         try {
            estado = Asignatura.Estado.valueOf(asignaturaEditarDto.getEstado());
