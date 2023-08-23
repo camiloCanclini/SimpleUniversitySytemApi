@@ -77,6 +77,8 @@ public class ProfesorController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la materia", null));
         } catch (NoHayMateriasException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No Hay Materias Cargadas", null));
+        } catch (NoHayProfesoresException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No hay profesores cargados", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha borrado la materia al profesor", null));
     }

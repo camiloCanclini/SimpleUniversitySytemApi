@@ -72,7 +72,7 @@ public class AlumnoBusiness implements AlumnoBusinessInterface {
     public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, AsignaturaEditarDto asignaturaEditarDto) throws EstadoAsignaturaNoPermitidoException, AsignaturaNoEncontradaException, AlumnoNoEncontradoException, NoHayAlumnosException {
         Asignatura.Estado estado;
         try {
-           estado = Asignatura.Estado.valueOf(asignaturaEditarDto.getEstado());
+           estado = Asignatura.Estado.valueOf(asignaturaEditarDto.getEstado().toUpperCase());
         }catch(IllegalArgumentException e){
             throw new EstadoAsignaturaNoPermitidoException();
         }

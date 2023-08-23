@@ -1,0 +1,82 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ProfesorDataInterface</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Data.Interfaces</a>
+</div>
+
+<h1>Coverage Summary for Class: ProfesorDataInterface (com.canclini.finalLaboIII.Data.Interfaces)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ProfesorDataInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Data.Interfaces;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.*;
+&nbsp;import com.canclini.finalLaboIII.Entity.Alumno;
+&nbsp;import com.canclini.finalLaboIII.Entity.Profesor;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public interface ProfesorDataInterface {
+&nbsp;    public int crearProfesor(Profesor profesor);
+&nbsp;    public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException;
+&nbsp;    public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException;
+&nbsp;    public Map&lt;Integer, Profesor&gt; obtenerListaProfesor() throws NoHayProfesoresException;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

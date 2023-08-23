@@ -73,7 +73,7 @@ public class AlumnoData extends MemoryDataAbstract<Alumno> implements AlumnoData
         if (!obtenerListaAlumnos().containsKey(idAlumno)) {
             throw new AlumnoNoEncontradoException();
         }
-        if (!lista.get(idAlumno).getAsignaturas().containsKey(idAsignatura)){
+        if (!obtenerListaAlumnos().get(idAlumno).getAsignaturas().containsKey(idAsignatura)){
             throw new AsignaturaNoEncontradaException();
         }
         HashMap<Integer, Asignatura> asignaturas = obtenerListaAlumnos().get(idAlumno).getAsignaturas();

@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CarreraBusiness</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Business.Implementations</a>
+</div>
+
+<h1>Coverage Summary for Class: CarreraBusiness (com.canclini.finalLaboIII.Business.Implementations)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CarreraBusiness</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$5PXyNfO9</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$9TcL0Fo2</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$eVRzUzFC</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$kWrgKRZj</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$Pz9251Uo</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$T5xP5xJ7</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$tl1VFVO4</td>
+  </tr>
+  <tr>
+    <td class="name">CarreraBusiness$MockitoMock$1855712875$auxiliary$to5xGRX0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Business.Implementations;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Interfaces.CarreraBusinessInterface;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
+&nbsp;import com.canclini.finalLaboIII.Data.Implementations.CarreraData;
+&nbsp;import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
+&nbsp;import com.canclini.finalLaboIII.Entity.Carrera;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.HashSet;
+&nbsp;import java.util.Map;
+&nbsp;@Service
+<b class="fc">&nbsp;public class CarreraBusiness implements CarreraBusinessInterface {</b>
+&nbsp;    @Autowired
+&nbsp;    CarreraData carreraData;
+&nbsp;    @Autowired
+&nbsp;    DepartamentoData departamentoData;
+&nbsp;    @Override
+&nbsp;    public int crearCarrera(CarreraDto carreraDto) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
+<b class="fc">&nbsp;        if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {</b>
+<b class="fc">&nbsp;         throw new DepartamentoNoEncontradoException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Carrera nuevaCarrera = new Carrera(carreraDto.getNombre(), carreraDto.getCantidadAnios(), carreraDto.getDepartamentoId(), new HashSet&lt;&gt;());</b>
+<b class="fc">&nbsp;        return carreraData.crearCarrera(nuevaCarrera);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
+<b class="fc">&nbsp;        carreraData.borrarCarrera(idCarrera);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void editarCarrera(int idCarrera, CarreraDto carreraDto) throws NoHayDepartamentosException, DepartamentoNoEncontradoException, NoHayCarrerasException, CarreraNoEncontradaException {
+<b class="fc">&nbsp;        if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {</b>
+<b class="nc">&nbsp;            throw new DepartamentoNoEncontradoException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Carrera carrera = carreraData.buscarCarreraById(idCarrera);</b>
+<b class="fc">&nbsp;        if (!(carreraDto.getNombre() == null)) {</b>
+<b class="fc">&nbsp;            carrera.setNombre(carreraDto.getNombre());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!(carreraDto.getCantidadAnios() == null)) {</b>
+<b class="fc">&nbsp;            carrera.setCantidadAnios(carreraDto.getCantidadAnios());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Carrera carreraEditada = new Carrera(carrera.getNombre(), carrera.getCantidadAnios(), carrera.getDepartamentoId(), new HashSet&lt;&gt;());</b>
+<b class="fc">&nbsp;        carreraData.editarCarrera(idCarrera, carreraEditada);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Carrera buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
+<b class="fc">&nbsp;        return carreraData.buscarCarreraById(idCarrera);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public HashSet&lt;Integer&gt; obtenerListaMateriaDeCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
+<b class="fc">&nbsp;        return carreraData.obtenerListaMateriaDeCarrera(idCarrera);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Map&lt;Integer, Carrera&gt; obtenerListaCarrera() throws NoHayCarrerasException {
+<b class="fc">&nbsp;        return carreraData.obtenerListaCarrera();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

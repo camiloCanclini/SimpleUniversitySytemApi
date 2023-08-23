@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AlumnoData</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Data.Implementations</a>
+</div>
+
+<h1>Coverage Summary for Class: AlumnoData (com.canclini.finalLaboIII.Data.Implementations)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AlumnoData</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.2%
+  </span>
+  <span class="absValue">
+    (25/29)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$5n1S9Nw9</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$BfC2fDZ4</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$e1Nmvphs</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$kJ1BhIkc</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$mzJpsk3w</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$n0khJKeu</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$uI77LKNO</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$XNZXuXWg</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$Zdrz9aal</td>
+  </tr>
+  <tr>
+    <td class="name">AlumnoData$MockitoMock$35995051$auxiliary$zQ3Iee5f</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86.2%
+  </span>
+  <span class="absValue">
+    (25/29)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Data.Implementations;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.AsignaturaNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
+&nbsp;import com.canclini.finalLaboIII.Data.Interfaces.AlumnoDataInterface;
+&nbsp;import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
+&nbsp;import com.canclini.finalLaboIII.Entity.Alumno;
+&nbsp;import com.canclini.finalLaboIII.Entity.Asignatura;
+&nbsp;import lombok.NonNull;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;@Repository
+<b class="fc">&nbsp;public class AlumnoData extends MemoryDataAbstract&lt;Alumno&gt; implements AlumnoDataInterface {</b>
+&nbsp;
+&nbsp;    @Override
+<b class="fc">&nbsp;    public int crearAlumno(@NonNull Alumno alumno){</b>
+<b class="fc">&nbsp;        int idAlumno = generarId();</b>
+<b class="fc">&nbsp;        lista.put(idAlumno, alumno);</b>
+<b class="fc">&nbsp;        return idAlumno;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void borrarAlumno(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException {
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().containsKey(idAlumno)) {</b>
+<b class="fc">&nbsp;            throw new AlumnoNoEncontradoException( );</b>
+&nbsp;        }
+<b class="fc">&nbsp;        obtenerListaAlumnos().remove(idAlumno);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+<b class="fc">&nbsp;    public void editarAlumno(int idAlumno, @NonNull Alumno alumno) throws AlumnoNoEncontradoException, NoHayAlumnosException {</b>
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().containsKey(idAlumno)) {</b>
+<b class="nc">&nbsp;            throw new AlumnoNoEncontradoException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        obtenerListaAlumnos().replace(idAlumno,alumno);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException {
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().containsKey(idAlumno)) {</b>
+<b class="fc">&nbsp;            throw new AlumnoNoEncontradoException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return obtenerListaAlumnos().get(idAlumno);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Map&lt;Integer, Alumno&gt; obtenerListaAlumnos() throws NoHayAlumnosException {
+<b class="nc">&nbsp;        if (lista.isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayAlumnosException();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return lista;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) throws AlumnoNoEncontradoException, NoHayAlumnosException {
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().containsKey(idAlumno)) {</b>
+<b class="fc">&nbsp;            throw new AlumnoNoEncontradoException();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Alumno alumno = obtenerListaAlumnos().get(idAlumno);</b>
+<b class="fc">&nbsp;        alumno.getAsignaturas().put(asignatura.getIdMateria(), asignatura);</b>
+<b class="fc">&nbsp;        return asignatura.getIdMateria();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) throws AlumnoNoEncontradoException, AsignaturaNoEncontradaException, NoHayAlumnosException {
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().containsKey(idAlumno)) {</b>
+<b class="fc">&nbsp;            throw new AlumnoNoEncontradoException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!obtenerListaAlumnos().get(idAlumno).getAsignaturas().containsKey(idAsignatura)){</b>
+<b class="fc">&nbsp;            throw new AsignaturaNoEncontradaException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        HashMap&lt;Integer, Asignatura&gt; asignaturas = obtenerListaAlumnos().get(idAlumno).getAsignaturas();</b>
+<b class="fc">&nbsp;        asignaturas.get(idAsignatura).setEstado(estado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

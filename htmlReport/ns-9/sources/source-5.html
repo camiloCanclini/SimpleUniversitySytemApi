@@ -1,0 +1,211 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ProfesorController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: ProfesorController (com.canclini.finalLaboIII.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProfesorController</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.4%
+  </span>
+  <span class="absValue">
+    (1/42)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ProfesorController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.4%
+  </span>
+  <span class="absValue">
+    (1/42)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Controllers;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorMateriaDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
+&nbsp;import com.canclini.finalLaboIII.Business.Implementations.ProfesorBusiness;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Entity.Profesor;
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.validation.annotation.Validated;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping
+&nbsp;@Validated
+<b class="fc">&nbsp;public class ProfesorController {</b>
+&nbsp;    @Autowired
+&nbsp;    private ProfesorBusiness profesorBusiness;
+&nbsp;    @GetMapping(&quot;/profesores&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getProfesores(){
+&nbsp;        try {
+<b class="nc">&nbsp;            Map&lt;Integer, Profesor&gt; profesores = profesorBusiness.obtenerListaProfesor();</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, null, profesores));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayProfesoresException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/profesor&quot;)
+&nbsp;
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; crearProfesor(@RequestBody @Valid ProfesorDto profesor){
+&nbsp;
+<b class="nc">&nbsp;    if (profesor == null) {</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese la entidad profesor&quot;, null));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    Integer idNuevoProfesor = profesorBusiness.crearProfesor(profesor);</b>
+<b class="nc">&nbsp;    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Profesor creado exitosamente&quot;, idNuevoProfesor));</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/profesor/{idProfesor}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; agregarMateria(@Nullable @RequestBody @Valid ProfesorMateriaDto materia, @PathVariable Integer idProfesor){
+<b class="nc">&nbsp;        if (materia == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese el idMateria&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            profesorBusiness.agregarMateria(idProfesor, materia.getIdMateria());</b>
+<b class="nc">&nbsp;        }catch (ProfesorNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el profesor&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (MateriaNoEncontradaException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró la materia&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayMateriasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No hay materias cargadas&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayProfesoresException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No hay profesores cargados&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Se ha agregado la materia al profesor&quot;, null));</b>
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/profesor/{idProfesor}/{idMateria}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; agregarMateria(@PathVariable Integer idMateria, @PathVariable Integer idProfesor){
+<b class="nc">&nbsp;        if (idMateria == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese el idMateria&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            profesorBusiness.borrarMateria(idProfesor, idMateria);</b>
+<b class="nc">&nbsp;        }catch (ProfesorNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el profesor&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (MateriaNoEncontradaException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró la materia&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayMateriasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No Hay Materias Cargadas&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayProfesoresException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No hay profesores cargados&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Se ha borrado la materia al profesor&quot;, null));</b>
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/profesor/{idProfesor}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; eliminarProfesor(@PathVariable Integer idProfesor){
+&nbsp;        try{
+<b class="nc">&nbsp;            profesorBusiness.borrarProfesor(idProfesor);</b>
+<b class="nc">&nbsp;        }catch (ProfesorNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el profesor&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayProfesoresException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No hay profesores cargados&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Profesor Eliminado Exitosamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

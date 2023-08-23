@@ -1,0 +1,218 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CarreraController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: CarreraController (com.canclini.finalLaboIII.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CarreraController</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20.9%
+  </span>
+  <span class="absValue">
+    (9/43)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CarreraController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20.9%
+  </span>
+  <span class="absValue">
+    (9/43)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Controllers;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
+&nbsp;import com.canclini.finalLaboIII.Business.Implementations.CarreraBusiness;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
+&nbsp;import com.canclini.finalLaboIII.Entity.Carrera;
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.validation.annotation.Validated;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping
+&nbsp;@Validated
+<b class="fc">&nbsp;public class CarreraController {</b>
+&nbsp;    @Autowired
+&nbsp;    private CarreraBusiness carreraBusiness;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/carrera/{idCarrera}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getCarreraById(@Nullable @PathVariable Integer idCarrera){
+<b class="fc">&nbsp;        if (idCarrera == null || idCarrera &lt; 0) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.badRequest().body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;El ID de la carrera tiene que ser mayor a cero&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try {
+<b class="fc">&nbsp;            Carrera carrera = carreraBusiness.buscarCarreraById(idCarrera);</b>
+<b class="fc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Carerra Creada&quot;, carrera));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (NoHayCarrerasException e){</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Carreras Cargadas&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (CarreraNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;Carrera no encontrada&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/carreras&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getCarreras(){
+&nbsp;        try {
+<b class="nc">&nbsp;            Map&lt;Integer, Carrera&gt; carreras = carreraBusiness.obtenerListaCarrera();</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Carreras encontradas&quot;, carreras));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayCarrerasException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Carreras Cargadas&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/carrera&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; crearCarrera(@Nullable @RequestBody @Valid CarreraDto carrera){
+<b class="fc">&nbsp;        if (carrera == null) {</b>
+<b class="fc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Especifique Correctamente los datos de la Carrera&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            Integer idCarrera = carreraBusiness.crearCarrera(carrera);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Carrera Creada Exitosamente&quot;, idCarrera));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayDepartamentosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Departamentos Cargados&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (DepartamentoNoEncontradoException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;Departamento no encontrado&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/carrera/{idCarrera}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; editarCarrera(@Nullable @RequestBody @Valid CarreraDto carrera, @PathVariable Integer idCarrera){
+<b class="nc">&nbsp;        if (carrera == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Especifique Correctamente los datos de la Carrera&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (idCarrera == null || idCarrera &lt; 0) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.badRequest().body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;El Id de la carrera debe ser un entero mayor o igual a cero&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            carreraBusiness.editarCarrera(idCarrera, carrera);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayDepartamentosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Departamentos Cargados&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayCarrerasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Carreras Cargadas&quot;, null));</b>
+<b class="nc">&nbsp;        }catch (CarreraNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se a encontrado la carrera&quot;, idCarrera));</b>
+<b class="nc">&nbsp;        } catch (DepartamentoNoEncontradoException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No Se Ha Encontrado El Departamento&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Se a Editado la Carrera Correctamente&quot;, idCarrera));</b>
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/carrera/{idCarrera}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; eliminarCarrera(@PathVariable Integer idCarrera){
+&nbsp;        try{
+<b class="nc">&nbsp;            carreraBusiness.borrarCarrera(idCarrera);</b>
+<b class="nc">&nbsp;        }catch (CarreraNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;Carrera no encontrada&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayCarrerasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Carreras Cargadas&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Carrera Eliminada Correctamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

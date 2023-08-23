@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DepartamentoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: DepartamentoController (com.canclini.finalLaboIII.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DepartamentoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.6%
+  </span>
+  <span class="absValue">
+    (1/18)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DepartamentoController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.6%
+  </span>
+  <span class="absValue">
+    (1/18)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Controllers;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.DepartamentoDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
+&nbsp;import com.canclini.finalLaboIII.Business.Implementations.DepartamentoBusiness;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.validation.annotation.Validated;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping
+&nbsp;@Validated
+<b class="fc">&nbsp;public class DepartamentoController {</b>
+&nbsp;    @Autowired
+&nbsp;    DepartamentoBusiness departamentoBusiness;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/departamentos&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getDepas(){
+&nbsp;        try {
+<b class="nc">&nbsp;            Map&lt;Integer, String&gt; depas = departamentoBusiness.obtenerListaDepartamentos();</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Departamentos encontrados&quot;, depas));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayDepartamentosException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Departamentos Cargados&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/departamento&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; crearDepartamento(@Nullable @RequestBody @Valid DepartamentoDto departamentoDto){
+<b class="nc">&nbsp;        if (departamentoDto == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Especifique el nombre del departamento&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            Integer idDepa = departamentoBusiness.crearDepartamento(departamentoDto);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Departamento Creado Exitosamente&quot;, idDepa));</b>
+<b class="nc">&nbsp;        } catch (NoHayDepartamentosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Departamentos Cargados&quot;, null));</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/departamento/{idDepa}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; eliminarDepa(@PathVariable Integer idDepa){
+&nbsp;        try{
+<b class="nc">&nbsp;            departamentoBusiness.borrarDepartamento(idDepa);</b>
+<b class="nc">&nbsp;        }catch (NoHayDepartamentosException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Departamentos Cargados&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch(DepartamentoNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró al departamento&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Departamento Eliminado Exitosamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

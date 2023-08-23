@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MateriaController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: MateriaController (com.canclini.finalLaboIII.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MateriaController</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.6%
+  </span>
+  <span class="absValue">
+    (1/39)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MateriaController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.6%
+  </span>
+  <span class="absValue">
+    (1/39)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Controllers;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
+&nbsp;import com.canclini.finalLaboIII.Business.Implementations.MateriaBusiness;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Implementations.MateriaData.OrderMateriaBy;
+&nbsp;import com.canclini.finalLaboIII.Entity.Materia;
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.validation.annotation.Validated;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Arrays;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping
+&nbsp;@Validated
+<b class="fc">&nbsp;public class MateriaController {</b>
+&nbsp;    @Autowired
+&nbsp;    private MateriaBusiness materiaBusiness;
+&nbsp;    @GetMapping(&quot;/materia&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getMateriaByNombre(@Nullable @RequestParam String nombre){
+<b class="nc">&nbsp;        if (nombre == null || nombre.isEmpty()) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;Ingrese el nombre de la Materia&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            Materia materia = materiaBusiness.buscarMateriaByNombre(nombre);</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, &quot;Materia Encontrada&quot;, materia));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayMateriasException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Materias Cargadas&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (MateriaNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se ha encontrado la Materia&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @GetMapping(&quot;/materias&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getMateriasByFiltro(@Nullable @RequestParam String order){
+&nbsp;        try {
+<b class="nc">&nbsp;            if (order == null || order.isEmpty()) {</b>
+<b class="nc">&nbsp;                Map&lt;Integer, Materia&gt; listaMaterias = materiaBusiness.obtenerListaMaterias();</b>
+<b class="nc">&nbsp;                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Lista de Materias sin ORDER&quot;, listaMaterias));</b>
+&nbsp;            }
+<b class="nc">&nbsp;            OrderMateriaBy orderBy = OrderMateriaBy.valueOf(order.toLowerCase());</b>
+<b class="nc">&nbsp;            List&lt;Map.Entry&lt;Integer, Materia&gt;&gt; listaMateriasOrdenadas = materiaBusiness.obtenerListaMateriasOrderedBy(orderBy);</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, &quot;Lista de Materias con ORDER&quot;, listaMateriasOrdenadas));</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException ex) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese un tipo de ordenamiento(order)&quot;, Arrays.toString(OrderMateriaBy.values())));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayMateriasException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Materias Cargadas&quot;, null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/materia&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; crearMateria(@Nullable @RequestBody @Valid MateriaDto materiadto){
+<b class="nc">&nbsp;        if (materiadto == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Especifique Correctamente los datos de la materia&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        int materiaId = materiaBusiness.crearMateria(materiadto);</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, &quot;Materia Creada Correctamente&quot;, materiaId));</b>
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/materia/{idMateria}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; editarMateria(@Nullable @RequestBody @Valid MateriaDto materia, @PathVariable Integer idMateria){
+<b class="nc">&nbsp;        if (materia == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Especifique Correctamente los datos de la materia&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            materiaBusiness.editarMateria(idMateria, materia);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayMateriasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Materias Cargadas&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (MateriaNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;Materia No Encontrada&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, &quot;Materia Editada Correctamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/materia/{idMateria}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; eliminarMateria(@PathVariable Integer idMateria){
+&nbsp;        try{
+<b class="nc">&nbsp;            materiaBusiness.borrarMateria(idMateria);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayMateriasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Materias Cargadas&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (MateriaNoEncontradaException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se ha encontrado la Materia&quot;, null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, &quot;La Materia Se Ha Eliminado Correctamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AlumnoController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: AlumnoController (com.canclini.finalLaboIII.Controllers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AlumnoController</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (2/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.2%
+  </span>
+  <span class="absValue">
+    (2/48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AlumnoController$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (2/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.2%
+  </span>
+  <span class="absValue">
+    (2/48)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Controllers;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoEditarDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaEditarDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
+&nbsp;import com.canclini.finalLaboIII.Business.Implementations.AlumnoBusiness;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.*;
+&nbsp;import com.canclini.finalLaboIII.Entity.Alumno;
+&nbsp;import com.canclini.finalLaboIII.Entity.Asignatura;
+&nbsp;import jakarta.annotation.Nullable;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.validation.annotation.Validated;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+<b class="fc">&nbsp;@RestController</b>
+&nbsp;@RequestMapping
+&nbsp;@Validated
+<b class="fc">&nbsp;public class AlumnoController {</b>
+&nbsp;    @Autowired
+&nbsp;    private AlumnoBusiness alumnoBusiness;
+&nbsp;    @GetMapping(&quot;/alumnos&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; getAlumnos(){
+&nbsp;        try {
+<b class="nc">&nbsp;            Map&lt;Integer, Alumno&gt; alumnos = alumnoBusiness.obtenerListaAlumnos();</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, null, alumnos));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (NoHayAlumnosException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PostMapping(&quot;/alumno&quot;)
+&nbsp;
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; crearAlumno(@RequestBody @Valid AlumnoDto alumno){
+&nbsp;
+<b class="nc">&nbsp;    if (alumno == null) {</b>
+<b class="nc">&nbsp;        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese la entidad alumno&quot;, null));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    Integer idNuevoAlumno = alumnoBusiness.crearAlumno(alumno);</b>
+<b class="nc">&nbsp;    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Alumno creado exitosamente&quot;, null));</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/alumno/{idAlumno}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; editarAlumno(@Nullable @RequestBody @Valid AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
+<b class="nc">&nbsp;        if (alumno == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese la entidad alumno&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            alumnoBusiness.editarAlumno(idAlumno, alumno);</b>
+<b class="nc">&nbsp;        }catch (AlumnoNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el alumno&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayAlumnosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Se ha editado correctamente el alumno&quot;, null));</b>
+&nbsp;    }
+&nbsp;    @DeleteMapping(&quot;/alumno/{idAlumno}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; eliminarAlumno(@PathVariable Integer idAlumno){
+&nbsp;        try{
+<b class="nc">&nbsp;            alumnoBusiness.borrarAlumno(idAlumno);</b>
+<b class="nc">&nbsp;        }catch (AlumnoNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el alumno&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayAlumnosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Alumno Eliminado Exitosamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/alumno/{idAlumno}/asignatura&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; aniadirAsignaturaAlumno(@PathVariable Integer idAlumno, @Nullable @RequestBody @Valid AsignaturaDto asignatura){
+<b class="nc">&nbsp;        if (asignatura == null) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, &quot;Ingrese correctamente los datos de la Asignatura&quot;, null));</b>
+&nbsp;        }
+&nbsp;        try{
+<b class="nc">&nbsp;            Integer idAsignatura = alumnoBusiness.aniadirAsignatura(idAlumno, asignatura);</b>
+<b class="nc">&nbsp;            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;La asignatura se añadió correctamente&quot;, idAsignatura));</b>
+<b class="nc">&nbsp;        }catch (AlumnoNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el alumno&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (MateriaNoEncontradaException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró la materia&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayMateriasException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, &quot;No Hay Materias Cargadas&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayAlumnosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @PutMapping(&quot;/alumno/{idAlumno}/asignatura/{idAsignatura}&quot;)
+&nbsp;    public ResponseEntity&lt;ResponseDtoJson&gt; cambiarEstadoAsignatura(@PathVariable Integer idAlumno, @PathVariable Integer idAsignatura, @Nullable @RequestBody @Valid AsignaturaEditarDto asignaturaEditarDto){
+&nbsp;        try{
+<b class="nc">&nbsp;            assert asignaturaEditarDto != null;</b>
+<b class="nc">&nbsp;            alumnoBusiness.cambiarEstadoAsignatura(idAlumno, idAsignatura, asignaturaEditarDto);</b>
+<b class="nc">&nbsp;        }catch (AlumnoNoEncontradoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró el alumno&quot;, null));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (AsignaturaNoEncontradaException | EstadoAsignaturaNoPermitidoException e){</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, &quot;No se encontró la Asignatura&quot;, null));</b>
+<b class="nc">&nbsp;        } catch (NoHayAlumnosException e) {</b>
+<b class="nc">&nbsp;            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, &quot;Estado de asignatura cambiado correctamente&quot;, null));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

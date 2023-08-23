@@ -2,6 +2,8 @@ package com.canclini.finalLaboIII.Data.Implementations;
 
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Interfaces.MateriaDataInterface;
 import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
 import com.canclini.finalLaboIII.Entity.Alumno;
@@ -113,5 +115,31 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
 
         return listaMateriasOrdenada;
     }
+    public List<Map.Entry<Integer, Materia>> obtenerMateriasDictadasPorProfesor(Integer idProfesor) throws NoHayMateriasException {
+        ArrayList<Map.Entry<Integer, Materia>> materiasQueDictaProfesor = new ArrayList<>();
+        for (Map.Entry<Integer, Materia> materia: obtenerListaMaterias().entrySet()) {
+            if (materia.getValue().getProfesores().contains(idProfesor)) {
+                materiasQueDictaProfesor.add(materia);
+            }
+        }
+        return materiasQueDictaProfesor;
+    }
 
+    public Set<Integer> obtenerIdsMateriasDictadasPorProfesor(Integer idProfesor) throws NoHayMateriasException {
+        HashSet<Integer> materiasQueDictaProfesor = new HashSet<>();
+        for (Map.Entry<Integer, Materia> materia: obtenerListaMaterias().entrySet()) {
+            if (materia.getValue().getProfesores().contains(idProfesor)) {
+                materiasQueDictaProfesor.add(materia.getKey());
+            }
+        }
+        return materiasQueDictaProfesor;
+    }
+    @Override
+    public void agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException {
+        buscarMateriaById(idMateria).getProfesores().add(idProfesor);
+    }
+    @Override
+    public void sacarProfesorDeMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
+        buscarMateriaById(idMateria).getProfesores().remove(idProfesor);
+    }
 }

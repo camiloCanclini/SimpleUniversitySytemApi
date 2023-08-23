@@ -1,0 +1,90 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > AlumnoDataInterface</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Data.Interfaces</a>
+</div>
+
+<h1>Coverage Summary for Class: AlumnoDataInterface (com.canclini.finalLaboIII.Data.Interfaces)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">AlumnoDataInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Data.Interfaces;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.AlumnoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.AsignaturaNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayAlumnosException;
+&nbsp;import com.canclini.finalLaboIII.Entity.Alumno;
+&nbsp;import com.canclini.finalLaboIII.Entity.Asignatura;
+&nbsp;import com.canclini.finalLaboIII.Entity.Materia;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public interface AlumnoDataInterface {
+&nbsp;    public int crearAlumno(Alumno alumno) throws NoHayAlumnosException;
+&nbsp;    public void borrarAlumno(int idAlumon) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+&nbsp;    public void editarAlumno(int idAlumno, Alumno alumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+&nbsp;    public Alumno buscarAlumnoById(int idAlumno) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+&nbsp;    public Map&lt;Integer, Alumno&gt; obtenerListaAlumnos() throws NoHayAlumnosException;
+&nbsp;    public int aniadirAsignatura(int idAlumno, Asignatura asignatura) throws AlumnoNoEncontradoException, NoHayAlumnosException;
+&nbsp;    public void cambiarEstadoAsignatura(int idAlumno, int idAsignatura, Asignatura.Estado estado, Integer nota) throws AlumnoNoEncontradoException, AsignaturaNoEncontradaException, NoHayAlumnosException;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

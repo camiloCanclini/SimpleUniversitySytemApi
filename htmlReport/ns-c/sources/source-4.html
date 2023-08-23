@@ -1,0 +1,320 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MateriaData</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Data.Implementations</a>
+</div>
+
+<h1>Coverage Summary for Class: MateriaData (com.canclini.finalLaboIII.Data.Implementations)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MateriaData</td>
+<td class="coverageStat">
+  <span class="percent">
+    61.5%
+  </span>
+  <span class="absValue">
+    (8/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    61.3%
+  </span>
+  <span class="absValue">
+    (38/62)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$3kTvEdys</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$66BQeNWm</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$Dk7LyMSD</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$FojjCSNu</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$KD40uJsx</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$KtJhYqpl</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$LpRyWAL3</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$n0jAYgCx</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$q8DQdX7v</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$rRrmszDf</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$vBtGJqKU</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$x6n9x8po</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$XjTZgjbe</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$MockitoMock$1125945731$auxiliary$y0LS1DQ9</td>
+  </tr>
+  <tr>
+    <td class="name">MateriaData$OrderMateriaBy</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (10/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64.2%
+  </span>
+  <span class="absValue">
+    (43/67)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Data.Implementations;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Interfaces.MateriaDataInterface;
+&nbsp;import com.canclini.finalLaboIII.Data.MemoryDataAbstract;
+&nbsp;import com.canclini.finalLaboIII.Entity.Alumno;
+&nbsp;import com.canclini.finalLaboIII.Entity.Materia;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;import lombok.NonNull;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import org.springframework.stereotype.Service;
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@Repository
+<b class="fc">&nbsp;public class MateriaData extends MemoryDataAbstract&lt;Materia&gt; implements MateriaDataInterface{</b>
+&nbsp;
+<b class="fc">&nbsp;    public enum OrderMateriaBy{</b>
+<b class="fc">&nbsp;        nombre_asc,</b>
+<b class="fc">&nbsp;        nombre_desc,</b>
+<b class="fc">&nbsp;        codigo_asc,</b>
+<b class="fc">&nbsp;        codigo_desc</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+<b class="fc">&nbsp;    public int crearMateria(@NonNull Materia materia) {</b>
+<b class="fc">&nbsp;        log.info(String.valueOf(materia));</b>
+<b class="fc">&nbsp;        int idMateria = generarId();</b>
+<b class="fc">&nbsp;        lista.put(idMateria,materia);</b>
+<b class="fc">&nbsp;        return idMateria;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void borrarMateria(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
+<b class="fc">&nbsp;        if (obtenerListaMaterias().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!obtenerListaMaterias().containsKey(idMateria)) {</b>
+<b class="fc">&nbsp;            throw new MateriaNoEncontradaException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        obtenerListaMaterias().remove(idMateria);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void editarMateria(int idMateria, Materia materia) throws NoHayMateriasException, MateriaNoEncontradaException {
+<b class="fc">&nbsp;        if (obtenerListaMaterias().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!obtenerListaMaterias().containsKey(idMateria)) {</b>
+<b class="nc">&nbsp;            throw new MateriaNoEncontradaException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        obtenerListaMaterias().replace(idMateria, materia);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Materia buscarMateriaById(int idMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
+<b class="fc">&nbsp;        if (obtenerListaMaterias().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!obtenerListaMaterias().containsKey(idMateria)) {</b>
+<b class="fc">&nbsp;            throw new MateriaNoEncontradaException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return obtenerListaMaterias().get(idMateria);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Materia buscarMateriabyNombre(String nombreMateria) throws NoHayMateriasException, MateriaNoEncontradaException {
+<b class="fc">&nbsp;        if (obtenerListaMaterias().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (Materia materia: obtenerListaMaterias().values()) {</b>
+<b class="fc">&nbsp;            if (materia.getNombre().equals(nombreMateria))</b>
+<b class="fc">&nbsp;                return materia;</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        throw new MateriaNoEncontradaException();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Map&lt;Integer, Materia&gt; obtenerListaMaterias() throws NoHayMateriasException {
+<b class="nc">&nbsp;        if (lista.isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return lista;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Map.Entry&lt;Integer, Materia&gt;&gt; obtenerListaMateriasOrderedBy(OrderMateriaBy order) throws NoHayMateriasException, IllegalArgumentException {
+<b class="fc">&nbsp;        if (obtenerListaMaterias().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new NoHayMateriasException();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        List&lt;Map.Entry&lt;Integer, Materia&gt;&gt; listaMateriasOrdenada = new ArrayList&lt;&gt;(obtenerListaMaterias().entrySet());</b>
+&nbsp;        // Comparador para ordenar por nombre y, en caso de empate, por código (ID del mapa)
+<b class="fc">&nbsp;        Comparator&lt;Map.Entry&lt;Integer, Materia&gt;&gt; comparador = Comparator</b>
+<b class="fc">&nbsp;                .comparing((Map.Entry&lt;Integer, Materia&gt; entry) -&gt; entry.getValue().getNombre())</b>
+<b class="fc">&nbsp;                .thenComparing(Map.Entry::getKey);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (order == OrderMateriaBy.nombre_asc) {</b>
+<b class="fc">&nbsp;            listaMateriasOrdenada.sort(comparador);</b>
+<b class="fc">&nbsp;        } else if (order == OrderMateriaBy.nombre_desc) {</b>
+<b class="fc">&nbsp;            listaMateriasOrdenada.sort(comparador.reversed());</b>
+<b class="fc">&nbsp;        } else if (order == OrderMateriaBy.codigo_asc) {</b>
+&nbsp;            // Ordenar por código (ID del mapa) de forma ascendente
+<b class="fc">&nbsp;            listaMateriasOrdenada.sort(Map.Entry.comparingByKey());</b>
+<b class="fc">&nbsp;        } else if (order == OrderMateriaBy.codigo_desc) {</b>
+&nbsp;            // Ordenar por código (ID del mapa) de forma descendente
+<b class="fc">&nbsp;            listaMateriasOrdenada.sort(Map.Entry.comparingByKey(Comparator.reverseOrder()));</b>
+&nbsp;        } else {
+&nbsp;            // Manejar caso inválido de OrderMateriaBy (puedes lanzar una excepción o hacer algo apropiado)
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Ordenamiento no válido: &quot; + order);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return listaMateriasOrdenada;</b>
+&nbsp;    }
+&nbsp;    public List&lt;Map.Entry&lt;Integer, Materia&gt;&gt; obtenerMateriasDictadasPorProfesor(Integer idProfesor) throws NoHayMateriasException {
+<b class="nc">&nbsp;        ArrayList&lt;Map.Entry&lt;Integer, Materia&gt;&gt; materiasQueDictaProfesor = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Map.Entry&lt;Integer, Materia&gt; materia: obtenerListaMaterias().entrySet()) {</b>
+<b class="nc">&nbsp;            if (materia.getValue().getProfesores().contains(idProfesor)) {</b>
+<b class="nc">&nbsp;                materiasQueDictaProfesor.add(materia);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return materiasQueDictaProfesor;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Set&lt;Integer&gt; obtenerIdsMateriasDictadasPorProfesor(Integer idProfesor) throws NoHayMateriasException {
+<b class="nc">&nbsp;        HashSet&lt;Integer&gt; materiasQueDictaProfesor = new HashSet&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Map.Entry&lt;Integer, Materia&gt; materia: obtenerListaMaterias().entrySet()) {</b>
+<b class="nc">&nbsp;            if (materia.getValue().getProfesores().contains(idProfesor)) {</b>
+<b class="nc">&nbsp;                materiasQueDictaProfesor.add(materia.getKey());</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return materiasQueDictaProfesor;</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public void agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException {
+<b class="nc">&nbsp;        buscarMateriaById(idMateria).getProfesores().add(idProfesor);</b>
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public void sacarProfesorDeMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
+<b class="nc">&nbsp;        buscarMateriaById(idMateria).getProfesores().remove(idProfesor);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

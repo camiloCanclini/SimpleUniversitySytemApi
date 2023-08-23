@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CarreraBusinessInterface</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Business.Interfaces</a>
+</div>
+
+<h1>Coverage Summary for Class: CarreraBusinessInterface (com.canclini.finalLaboIII.Business.Interfaces)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">CarreraBusinessInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Business.Interfaces;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
+&nbsp;import com.canclini.finalLaboIII.Entity.Carrera;
+&nbsp;
+&nbsp;import java.util.HashSet;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public interface CarreraBusinessInterface {
+&nbsp;    public int crearCarrera(CarreraDto carrera) throws DepartamentoNoEncontradoException, NoHayDepartamentosException;
+&nbsp;    public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException;
+&nbsp;    public void editarCarrera(int idCarrera, CarreraDto carrera) throws NoHayDepartamentosException, DepartamentoNoEncontradoException, NoHayCarrerasException, CarreraNoEncontradaException;
+&nbsp;    public Object buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException;
+&nbsp;    public HashSet&lt;Integer&gt; obtenerListaMateriaDeCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException;
+&nbsp;    public Map&lt;Integer, Carrera&gt; obtenerListaCarrera() throws NoHayCarrerasException;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.canclini.finalLaboIII.Data.Implementations;
 
+import com.canclini.finalLaboIII.Business.Implementations.MateriaBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
@@ -31,28 +32,7 @@ public class ProfesorData extends MemoryDataAbstract<Profesor> implements Profes
         if (!obtenerListaProfesor().containsKey(idProfesor)) {
             throw new ProfesorNoEncontradoException();
         }
-        lista.remove(idProfesor);
-    }
-
-    @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException, NoHayProfesoresException {
-        if (!obtenerListaProfesor().containsKey(idProfesor)) {
-            throw new ProfesorNoEncontradoException();
-        }
-        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
-            throw new MateriaNoEncontradaException();
-        }
-        obtenerListaProfesor().get(idProfesor).getMateriasDictadas().add(idMateria);
-    }
-    @Override
-    public void borrarMateria(int idProfesor, Integer idMateria) throws ProfesorNoEncontradoException, NoHayMateriasException, MateriaNoEncontradaException {
-        if (!materiaData.obtenerListaMaterias().containsKey(idProfesor)) {
-            throw new ProfesorNoEncontradoException();
-        }
-        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
-            throw new MateriaNoEncontradaException();
-        }
-        lista.get(idProfesor).getMateriasDictadas().remove(idMateria);
+        obtenerListaProfesor().remove(idProfesor);
     }
     @Override
     public Profesor buscarProfesorById(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {

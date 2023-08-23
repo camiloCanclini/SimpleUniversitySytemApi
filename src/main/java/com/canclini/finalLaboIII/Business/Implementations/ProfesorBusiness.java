@@ -6,6 +6,7 @@ import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
+import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Data.Implementations.ProfesorData;
 import com.canclini.finalLaboIII.Entity.Profesor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class ProfesorBusiness implements ProfesorBusinessInterface {
     @Autowired
     ProfesorData profesorData;
+    @Autowired
+    MateriaData materiaData;
     @Override
     public int crearProfesor(ProfesorDto profesor) {
         Profesor nuevoProfesor = new Profesor();
@@ -25,7 +28,6 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
         nuevoProfesor.setApellido(profesor.getApellido());
         nuevoProfesor.setDni(profesor.getDni());
         nuevoProfesor.setTitulo(profesor.getTitulo());
-        nuevoProfesor.setMateriasDictadas( new HashSet<Integer>());
         return profesorData.crearProfesor(nuevoProfesor);
     }
 
@@ -36,11 +38,24 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
 
     @Override
     public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
-        profesorData.agregarMateria(idProfesor, idMateria);
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+        if (!profesorData.obtenerListaProfesor().containsKey(idProfesor)) {
+            throw new ProfesorNoEncontradoException();
+        }
+        materiaData.agregarProfesorAMateria(idProfesor, idMateria);
     }
 
-    public void borrarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException {
-        profesorData.borrarMateria(idProfesor, idMateria);
+    public void borrarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
+        if (!profesorData.obtenerListaProfesor().containsKey(idProfesor)) {
+            throw new ProfesorNoEncontradoException();
+        }
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+
+        materiaData.sacarProfesorDeMateria(idProfesor, idMateria);
     }
 
     @Override

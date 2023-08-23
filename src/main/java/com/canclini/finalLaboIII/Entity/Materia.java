@@ -15,6 +15,6 @@ public class Materia {
     private String nombre;
     private Integer anio;
     private Integer cuatrimestre;
-    private Profesor profesor;
+    private HashSet<Integer> profesores;
     private HashSet<Integer> correlatividades;
 }

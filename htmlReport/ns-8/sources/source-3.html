@@ -1,0 +1,134 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DepartamentoBusiness</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.canclini.finalLaboIII.Business.Implementations</a>
+</div>
+
+<h1>Coverage Summary for Class: DepartamentoBusiness (com.canclini.finalLaboIII.Business.Implementations)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DepartamentoBusiness</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.canclini.finalLaboIII.Business.Implementations;
+&nbsp;
+&nbsp;import com.canclini.finalLaboIII.Business.Dtos.DepartamentoDto;
+&nbsp;import com.canclini.finalLaboIII.Business.Interfaces.DepartamentosBusinessInterface;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
+&nbsp;import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
+&nbsp;import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.Map;
+&nbsp;@Service
+<b class="fc">&nbsp;public class DepartamentoBusiness implements DepartamentosBusinessInterface {</b>
+&nbsp;    @Autowired
+&nbsp;    DepartamentoData departamentoData;
+&nbsp;    @Override
+&nbsp;    public int crearDepartamento(DepartamentoDto departamentoDto) throws NoHayDepartamentosException {
+<b class="fc">&nbsp;        return departamentoData.crearDepartamento(departamentoDto.getNombre());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void borrarDepartamento(Integer idDepa) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
+<b class="fc">&nbsp;        departamentoData.borrarDepartamento(idDepa);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Map&lt;Integer, String&gt; obtenerListaDepartamentos() throws NoHayDepartamentosException {
+<b class="nc">&nbsp;        return departamentoData.obtenerListaDepartamentos();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-23 01:23</div>
+</div>
+</body>
+</html>

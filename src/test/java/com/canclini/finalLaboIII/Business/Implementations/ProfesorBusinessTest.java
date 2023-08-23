@@ -1,7 +1,6 @@
 package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorDto;
-import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;

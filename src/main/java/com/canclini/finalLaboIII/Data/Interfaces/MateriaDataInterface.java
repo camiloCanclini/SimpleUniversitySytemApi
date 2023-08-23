@@ -2,6 +2,8 @@ package com.canclini.finalLaboIII.Data.Interfaces;
 
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData.OrderMateriaBy;
 import com.canclini.finalLaboIII.Entity.Materia;
 
@@ -16,5 +18,7 @@ public interface MateriaDataInterface {
     public Materia buscarMateriabyNombre(String nombreMateria) throws NoHayMateriasException, MateriaNoEncontradaException;
     public Map<Integer, Materia> obtenerListaMaterias() throws NoHayMateriasException;
     public List<Map.Entry<Integer, Materia>> obtenerListaMateriasOrderedBy(OrderMateriaBy order) throws NoHayMateriasException;
+    public void agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException;
+    public void sacarProfesorDeMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException;
 
 }

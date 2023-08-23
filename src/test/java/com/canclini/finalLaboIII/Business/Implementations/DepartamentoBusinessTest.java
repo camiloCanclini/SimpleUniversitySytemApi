@@ -2,12 +2,8 @@ package com.canclini.finalLaboIII.Business.Implementations;
 
 import com.canclini.finalLaboIII.Business.Dtos.DepartamentoDto;
 import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
-import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
-import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Implementations.DepartamentoData;
-import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
-import com.canclini.finalLaboIII.Entity.Materia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,10 +11,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 class DepartamentoBusinessTest {
     @Spy
@@ -70,10 +66,15 @@ class DepartamentoBusinessTest {
         });
     }
 
-    /*
+
     @Test
     void obtenerListaDepartamentos() {
+        DepartamentoData departamentoDataSpy = (new DepartamentoData());
+        assertThrows(NoHayDepartamentosException.class, ()->{
+            departamentoDataSpy.obtenerListaDepartamentos();
+        });
+
     }
-    */
+
 
 }

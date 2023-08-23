@@ -3,14 +3,12 @@ package com.canclini.finalLaboIII.Business.Implementations;
 import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoDto;
 import com.canclini.finalLaboIII.Business.Dtos.Alumno.AlumnoEditarDto;
 import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaDto;
-import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
-import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
+import com.canclini.finalLaboIII.Business.Dtos.Asignatura.AsignaturaEditarDto;
 import com.canclini.finalLaboIII.Data.Exceptions.*;
 import com.canclini.finalLaboIII.Data.Implementations.AlumnoData;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Entity.Alumno;
 import com.canclini.finalLaboIII.Entity.Asignatura;
-import com.canclini.finalLaboIII.Entity.Carrera;
 import com.canclini.finalLaboIII.Entity.Materia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -175,5 +173,35 @@ class AlumnoBusinessTest {
 
     @Test
     void cambiarEstadoAsignatura() {
+        AsignaturaEditarDto dto = new AsignaturaEditarDto();
+        dto.setEstado("CURSADA");
+
+        assertDoesNotThrow(()->{
+            dto.setEstado("CURSADA");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+            dto.setEstado("APROBADA");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+            dto.setEstado("NO_CURSADA");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+            dto.setEstado("cursada");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+            dto.setEstado("aprobada");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+            dto.setEstado("no_cursada");
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+        });
+
+        assertThrows(AlumnoNoEncontradoException.class,()->{
+            alumnoBusiness.cambiarEstadoAsignatura(5,0, dto);
+        });
+
+        assertThrows(AsignaturaNoEncontradaException.class,()->{
+            alumnoBusiness.cambiarEstadoAsignatura(1, 5,dto);
+        });
+
+        dto.setEstado("RecontraCursada");
+        assertThrows(EstadoAsignaturaNoPermitidoException.class,()->{
+            alumnoBusiness.cambiarEstadoAsignatura(0,0, dto);
+        });
     }
 }

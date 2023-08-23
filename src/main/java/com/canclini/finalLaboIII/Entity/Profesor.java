@@ -14,5 +14,4 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Profesor extends Persona{
     private String titulo;
-    private Set<Integer> materiasDictadas;
 }
