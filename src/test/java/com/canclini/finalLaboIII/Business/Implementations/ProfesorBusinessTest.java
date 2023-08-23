@@ -4,13 +4,11 @@ import com.canclini.finalLaboIII.Business.Dtos.Profesor.ProfesorDto;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
 import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
-import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
 import com.canclini.finalLaboIII.Data.Implementations.ProfesorData;
 import com.canclini.finalLaboIII.Entity.Profesor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
@@ -20,11 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProfesorBusinessTest {
-    @Mock
-    MateriaData materiaData;
+
     @Spy
     ProfesorData profesorData;
-
     @InjectMocks
     ProfesorBusiness profesorBusiness;
 
@@ -83,19 +79,14 @@ class ProfesorBusinessTest {
 
     }
 
-    /*@Test
-    void agregarMateria() throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
-    }*/
-
-    /*@Test
-    void borrarMateria() {
-    }*/
-
     @Test
     void buscarProfesorById() throws ProfesorNoEncontradoException, NoHayProfesoresException {
 
         assertDoesNotThrow(()->{
             Profesor profesor = profesorData.buscarProfesorById(1);
+        });
+        assertThrows(ProfesorNoEncontradoException.class,()->{
+            profesorBusiness.buscarProfesorById(5);
         });
         Profesor profesor = profesorData.buscarProfesorById(1);
         assertNotNull(profesor);

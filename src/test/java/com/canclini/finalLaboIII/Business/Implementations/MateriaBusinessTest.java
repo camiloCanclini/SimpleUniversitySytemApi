@@ -3,12 +3,17 @@ package com.canclini.finalLaboIII.Business.Implementations;
 import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
+import com.canclini.finalLaboIII.Data.Implementations.ProfesorData;
 import com.canclini.finalLaboIII.Entity.Materia;
+import com.canclini.finalLaboIII.Entity.Profesor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
@@ -21,24 +26,30 @@ class MateriaBusinessTest {
 
     @Spy
     MateriaData materiaData;
+    @Spy
+    ProfesorData profesorData;
 
     @InjectMocks
     MateriaBusiness materiaBusiness;
 
     @BeforeEach
-    void setUp() throws NoHayMateriasException {
+    void setUp() throws NoHayMateriasException, NoHayProfesoresException {
         MockitoAnnotations.openMocks(this);
 
         Materia mat = new Materia();
         mat.setNombre("Matematica I");
         mat.setAnio(1);
         mat.setCuatrimestre(1);
+        mat.setProfesores(new HashSet<Integer>());
         mat.setCorrelatividades(new HashSet<Integer>());
 
         Materia mat2 = new Materia();
         mat2.setNombre("Fisica II");
         mat2.setAnio(1);
         mat2.setCuatrimestre(2);
+        mat2.setProfesores(new HashSet<Integer>(){{
+            add(2); // Se agrega el profesor con el ID:2
+        }});
         mat2.setCorrelatividades(new HashSet<Integer>());
 
         HashMap<Integer, Materia> listaMaterias = new HashMap<>();
@@ -46,6 +57,24 @@ class MateriaBusinessTest {
         listaMaterias.put(1, mat2);
 
         doReturn(listaMaterias).when(materiaData).obtenerListaMaterias();
+
+        Profesor profe = new Profesor();
+        profe.setNombre("Pepe");
+        profe.setApellido("Argento");
+        profe.setDni(44453822L);
+        profe.setTitulo("Licenciado");
+
+        Profesor profe2 = new Profesor();
+        profe2.setNombre("Monica");
+        profe2.setApellido("Argento");
+        profe2.setDni(43423422L);
+        profe2.setTitulo("");
+
+        HashMap<Integer, Profesor> listaProfes = new HashMap<>();
+        listaProfes.put(0, profe);
+        listaProfes.put(1, profe2);
+
+        doReturn(listaProfes).when(profesorData).obtenerListaProfesor();
     }
 
     @Test
@@ -214,6 +243,37 @@ class MateriaBusinessTest {
             nombresMateriasOrdenadasReversed.add(materia.getValue().getNombre());
         }
         Assertions.assertThat(nombresMateriasOrdenadasReversed).isSortedAccordingTo(Comparator.reverseOrder());
+    }
+    @Test
+    void agregarProfesorAMateria() throws MateriaNoEncontradaException, NoHayMateriasException, ProfesorNoEncontradoException, NoHayProfesoresException {
+        assertDoesNotThrow(()->{
+            Integer cantidadDeProfesesoresAntes = materiaBusiness.buscarMateriaById(0).getProfesores().size();
+            materiaBusiness.agregarProfesorAMateria(0,0);
+            Integer cantidadDeProfesesoresDespues = materiaBusiness.buscarMateriaById(0).getProfesores().size();
+            assertTrue(cantidadDeProfesesoresDespues > cantidadDeProfesesoresAntes);
+        });
+        assertThrows(MateriaNoEncontradaException.class, ()->{
+            materiaBusiness.agregarProfesorAMateria(0,5);
+        });
+        assertThrows(ProfesorNoEncontradoException.class, ()->{
+            materiaBusiness.agregarProfesorAMateria(4,1);
+        });
 
+    }
+
+    @Test
+    void sacarProfesorDeMateria()
+    {
+        assertDoesNotThrow(()->{
+            System.out.println(materiaBusiness.obtenerListaMaterias().toString());
+            System.out.println(materiaBusiness.buscarMateriaById(1).getProfesores().size());
+            Integer cantidadDeProfesesoresAntes = materiaBusiness.buscarMateriaById(1).getProfesores().size();
+            materiaBusiness.sacarProfesorDeMateria(2,1);
+            Integer cantidadDeProfesesoresDespues = materiaBusiness.buscarMateriaById(1).getProfesores().size();
+            assertTrue(cantidadDeProfesesoresDespues < cantidadDeProfesesoresAntes);
+        });
+        assertThrows(MateriaNoEncontradaException.class, ()->{
+            materiaBusiness.sacarProfesorDeMateria(0,5);
+        });
     }
 }

@@ -4,7 +4,10 @@ import com.canclini.finalLaboIII.Business.Dtos.Materia.MateriaDto;
 import com.canclini.finalLaboIII.Business.Interfaces.MateriaBusinessInterface;
 import com.canclini.finalLaboIII.Data.Exceptions.MateriaNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayMateriasException;
+import com.canclini.finalLaboIII.Data.Exceptions.NoHayProfesoresException;
+import com.canclini.finalLaboIII.Data.Exceptions.ProfesorNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Implementations.MateriaData;
+import com.canclini.finalLaboIII.Data.Implementations.ProfesorData;
 import com.canclini.finalLaboIII.Entity.Materia;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ import java.util.Map;
 public class MateriaBusiness implements MateriaBusinessInterface {
     @Autowired
      MateriaData materiaData;
+
+    @Autowired
+    ProfesorData profesorData;
 
     @Override
     public int crearMateria(@NonNull MateriaDto materia) {
@@ -43,6 +49,26 @@ public class MateriaBusiness implements MateriaBusinessInterface {
     @Override
     public Materia buscarMateriaByNombre(String nombreMateria) throws MateriaNoEncontradaException, NoHayMateriasException {
         return materiaData.buscarMateriabyNombre(nombreMateria);
+    }
+
+    @Override
+    public void agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException, ProfesorNoEncontradoException {
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+        if (!profesorData.obtenerListaProfesor().containsKey(idProfesor)) {
+            throw new ProfesorNoEncontradoException();
+        }
+        materiaData.agregarProfesorAMateria(idProfesor, idMateria);
+    }
+
+    @Override
+    public void sacarProfesorDeMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
+        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
+            throw new MateriaNoEncontradaException();
+        }
+
+        materiaData.sacarProfesorDeMateria(idProfesor, idMateria);
     }
 
     @Override

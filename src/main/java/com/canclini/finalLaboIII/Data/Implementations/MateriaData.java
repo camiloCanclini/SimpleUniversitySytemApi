@@ -135,7 +135,7 @@ public class MateriaData extends MemoryDataAbstract<Materia> implements MateriaD
         return materiasQueDictaProfesor;
     }
     @Override
-    public void agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException {
+    public void  agregarProfesorAMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, NoHayMateriasException, NoHayProfesoresException {
         buscarMateriaById(idMateria).getProfesores().add(idProfesor);
     }
     @Override

@@ -19,8 +19,7 @@ import java.util.Map;
 public class ProfesorBusiness implements ProfesorBusinessInterface {
     @Autowired
     ProfesorData profesorData;
-    @Autowired
-    MateriaData materiaData;
+
     @Override
     public int crearProfesor(ProfesorDto profesor) {
         Profesor nuevoProfesor = new Profesor();
@@ -34,28 +33,6 @@ public class ProfesorBusiness implements ProfesorBusinessInterface {
     @Override
     public void borrarProfesor(int idProfesor) throws ProfesorNoEncontradoException, NoHayProfesoresException {
         profesorData.borrarProfesor(idProfesor);
-    }
-
-    @Override
-    public void agregarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
-        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
-            throw new MateriaNoEncontradaException();
-        }
-        if (!profesorData.obtenerListaProfesor().containsKey(idProfesor)) {
-            throw new ProfesorNoEncontradoException();
-        }
-        materiaData.agregarProfesorAMateria(idProfesor, idMateria);
-    }
-
-    public void borrarMateria(int idProfesor, Integer idMateria) throws MateriaNoEncontradaException, ProfesorNoEncontradoException, NoHayMateriasException, NoHayProfesoresException {
-        if (!profesorData.obtenerListaProfesor().containsKey(idProfesor)) {
-            throw new ProfesorNoEncontradoException();
-        }
-        if (!materiaData.obtenerListaMaterias().containsKey(idMateria)) {
-            throw new MateriaNoEncontradaException();
-        }
-
-        materiaData.sacarProfesorDeMateria(idProfesor, idMateria);
     }
 
     @Override

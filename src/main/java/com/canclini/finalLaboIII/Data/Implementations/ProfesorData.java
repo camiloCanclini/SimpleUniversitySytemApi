@@ -18,8 +18,6 @@ import java.util.Map;
 @Repository
 public class ProfesorData extends MemoryDataAbstract<Profesor> implements ProfesorDataInterface{
 
-    @Autowired
-    MateriaData materiaData;
     @Override
     public int crearProfesor(Profesor profesor) {
         int idProfesor = generarId();

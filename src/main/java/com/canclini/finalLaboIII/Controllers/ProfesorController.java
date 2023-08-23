@@ -46,7 +46,7 @@ public class ProfesorController {
     return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Profesor creado exitosamente", idNuevoProfesor));
 
     }
-    @PutMapping("/profesor/{idProfesor}")
+    /*@PutMapping("/profesor/{idProfesor}")
     public ResponseEntity<ResponseDtoJson> agregarMateria(@Nullable @RequestBody @Valid ProfesorMateriaDto materia, @PathVariable Integer idProfesor){
         if (materia == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese el idMateria", null));
@@ -82,6 +82,8 @@ public class ProfesorController {
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Se ha borrado la materia al profesor", null));
     }
+
+     */
     @DeleteMapping("/profesor/{idProfesor}")
     public ResponseEntity<ResponseDtoJson> eliminarProfesor(@PathVariable Integer idProfesor){
         try{
