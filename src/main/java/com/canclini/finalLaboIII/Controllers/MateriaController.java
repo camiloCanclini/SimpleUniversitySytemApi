@@ -47,7 +47,7 @@ public class MateriaController {
         try {
             if (order == null || order.isEmpty()) {
                 Map<Integer, Materia> listaMaterias = materiaBusiness.obtenerListaMaterias();
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Lista de Materias sin ORDER", listaMaterias));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseDtoJson(HttpStatus.OK, "Lista de Materias sin ORDER", listaMaterias));
             }
             OrderMateriaBy orderBy = OrderMateriaBy.valueOf(order.toLowerCase());
             List<Map.Entry<Integer, Materia>> listaMateriasOrdenadas = materiaBusiness.obtenerListaMateriasOrderedBy(orderBy);
@@ -60,7 +60,7 @@ public class MateriaController {
         }
     }
     @PostMapping("/materia")
-    public ResponseEntity<ResponseDtoJson> crearMateria(@Nullable @RequestBody @Valid MateriaDto materiadto){
+    public ResponseEntity<ResponseDtoJson> crearMateria(@RequestBody @Valid MateriaDto materiadto){
         if (materiadto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la materia", null));
         }

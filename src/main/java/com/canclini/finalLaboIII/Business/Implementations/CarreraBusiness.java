@@ -22,8 +22,9 @@ public class CarreraBusiness implements CarreraBusinessInterface {
     DepartamentoData departamentoData;
     @Override
     public int crearCarrera(CarreraDto carreraDto) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
-        if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {
-         throw new DepartamentoNoEncontradoException();
+        int idDepa = carreraDto.getDepartamentoId();
+        if (!departamentoData.obtenerListaDepartamentos().containsKey(idDepa)) {
+            throw new DepartamentoNoEncontradoException();
         }
         Carrera nuevaCarrera = new Carrera(carreraDto.getNombre(), carreraDto.getCantidadAnios(), carreraDto.getDepartamentoId(), new HashSet<>());
         return carreraData.crearCarrera(nuevaCarrera);
@@ -39,20 +40,30 @@ public class CarreraBusiness implements CarreraBusinessInterface {
         if (!departamentoData.obtenerListaDepartamentos().containsKey(carreraDto.getDepartamentoId())) {
             throw new DepartamentoNoEncontradoException();
         }
+
         Carrera carrera = carreraData.buscarCarreraById(idCarrera);
+
         if (!(carreraDto.getNombre() == null)) {
             carrera.setNombre(carreraDto.getNombre());
         }
         if (!(carreraDto.getCantidadAnios() == null)) {
             carrera.setCantidadAnios(carreraDto.getCantidadAnios());
         }
+        if (!(carreraDto.getDepartamentoId() == null)) {
+            carrera.setDepartamentoId(carreraDto.getDepartamentoId());
+        }
+
         Carrera carreraEditada = new Carrera(carrera.getNombre(), carrera.getCantidadAnios(), carrera.getDepartamentoId(), new HashSet<>());
         carreraData.editarCarrera(idCarrera, carreraEditada);
     }
 
     @Override
     public Carrera buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException {
-        return carreraData.buscarCarreraById(idCarrera);
+        if (!obtenerListaCarrera().containsKey(idCarrera)) {
+            throw new CarreraNoEncontradaException();
+        }
+
+        return obtenerListaCarrera().get(idCarrera);
     }
 
     @Override

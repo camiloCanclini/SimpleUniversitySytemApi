@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public interface CarreraBusinessInterface {
-    public int crearCarrera(CarreraDto carrera) throws DepartamentoNoEncontradoException, NoHayDepartamentosException;
+    public int crearCarrera(CarreraDto carrera) throws DepartamentoNoEncontradoException, NoHayDepartamentosException, NoHayCarrerasException;
     public void borrarCarrera(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException;
     public void editarCarrera(int idCarrera, CarreraDto carrera) throws NoHayDepartamentosException, DepartamentoNoEncontradoException, NoHayCarrerasException, CarreraNoEncontradaException;
     public Object buscarCarreraById(int idCarrera) throws NoHayCarrerasException, CarreraNoEncontradaException;

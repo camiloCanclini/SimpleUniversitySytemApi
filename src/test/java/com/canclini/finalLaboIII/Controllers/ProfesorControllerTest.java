@@ -26,8 +26,6 @@
     import static org.mockito.Mockito.*;
 
     class ProfesorControllerTest {
-
-
         MockMvc mockMvc;
 
         @Spy
@@ -149,6 +147,7 @@
             Mockito.verify(profesorBusiness, Mockito.times(1)).borrarProfesor(mockIdProfesor);
 
             doThrow(new ProfesorNoEncontradoException()).when(profesorBusiness).borrarProfesor(anyInt());
+
             mockMvc.perform(MockMvcRequestBuilders.delete("/profesor/3"))
                     .andExpect(MockMvcResultMatchers.status().isNotFound())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("NOT_FOUND"))

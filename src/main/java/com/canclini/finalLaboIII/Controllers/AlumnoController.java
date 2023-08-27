@@ -43,11 +43,11 @@ public class AlumnoController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
     }
     Integer idNuevoAlumno = alumnoBusiness.crearAlumno(alumno);
-    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno creado exitosamente", null));
+    return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Alumno creado exitosamente", idNuevoAlumno));
 
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<ResponseDtoJson> editarAlumno(@Nullable @RequestBody @Valid AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> editarAlumno(@RequestBody @Valid AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
         }
@@ -73,7 +73,7 @@ public class AlumnoController {
     }
 
     @PostMapping("/alumno/{idAlumno}/asignatura")
-    public ResponseEntity<ResponseDtoJson> aniadirAsignaturaAlumno(@PathVariable Integer idAlumno, @Nullable @RequestBody @Valid AsignaturaDto asignatura){
+    public ResponseEntity<ResponseDtoJson> aniadirAsignaturaAlumno(@PathVariable Integer idAlumno, @RequestBody @Valid AsignaturaDto asignatura){
         if (asignatura == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese correctamente los datos de la Asignatura", null));
         }
@@ -98,10 +98,12 @@ public class AlumnoController {
         }catch (AlumnoNoEncontradoException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró el alumno", null));
         }
-        catch (AsignaturaNoEncontradaException | EstadoAsignaturaNoPermitidoException e){
+        catch (AsignaturaNoEncontradaException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "No se encontró la Asignatura", null));
         } catch (NoHayAlumnosException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, e.getMessage(), null));
+        } catch (EstadoAsignaturaNoPermitidoException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Estado Asignatura NO Permitido", null));
         }
         return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Estado de asignatura cambiado correctamente", null));
     }

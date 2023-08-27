@@ -3,6 +3,7 @@ package com.canclini.finalLaboIII.Controllers;
 import com.canclini.finalLaboIII.Business.Dtos.Carrera.CarreraDto;
 import com.canclini.finalLaboIII.Business.Dtos.ResponseDtoJson;
 import com.canclini.finalLaboIII.Business.Implementations.CarreraBusiness;
+import com.canclini.finalLaboIII.Business.Implementations.DepartamentoBusiness;
 import com.canclini.finalLaboIII.Data.Exceptions.CarreraNoEncontradaException;
 import com.canclini.finalLaboIII.Data.Exceptions.DepartamentoNoEncontradoException;
 import com.canclini.finalLaboIII.Data.Exceptions.NoHayCarrerasException;
@@ -10,6 +11,7 @@ import com.canclini.finalLaboIII.Data.Exceptions.NoHayDepartamentosException;
 import com.canclini.finalLaboIII.Entity.Carrera;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import java.util.Map;
 public class CarreraController {
     @Autowired
     private CarreraBusiness carreraBusiness;
+    @Autowired
+    private DepartamentoBusiness departamentoBusiness;
 
     @GetMapping("/carrera/{idCarrera}")
     public ResponseEntity<ResponseDtoJson> getCarreraById(@Nullable @PathVariable Integer idCarrera){
@@ -52,23 +56,32 @@ public class CarreraController {
         }
     }
     @PostMapping("/carrera")
-    public ResponseEntity<ResponseDtoJson> crearCarrera(@Nullable @RequestBody @Valid CarreraDto carrera){
+    public ResponseEntity<ResponseDtoJson> crearCarrera(@Nullable @RequestBody @Valid CarreraDto carrera) throws DepartamentoNoEncontradoException, NoHayDepartamentosException {
         if (carrera == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la Carrera", null));
         }
         try{
-            Integer idCarrera = carreraBusiness.crearCarrera(carrera);
-            return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Carrera Creada Exitosamente", idCarrera));
-        }
-        catch (NoHayDepartamentosException e) {
+            if (departamentoBusiness.obtenerListaDepartamentos().isEmpty()){
+                throw new NoHayDepartamentosException();
+            }
+            if (!departamentoBusiness.obtenerListaDepartamentos().containsKey(carrera.getDepartamentoId())){
+                throw new DepartamentoNoEncontradoException();
+            }
+        }catch (NoHayDepartamentosException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDtoJson(HttpStatus.NO_CONTENT, "No Hay Departamentos Cargados", null));
         }
         catch (DepartamentoNoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDtoJson(HttpStatus.NOT_FOUND, "Departamento no encontrado", null));
         }
+
+        Integer idCarrera = carreraBusiness.crearCarrera(carrera);
+        return ResponseEntity.ok(new ResponseDtoJson(HttpStatus.OK, "Carrera Creada Exitosamente", idCarrera));
+
+
+
     }
     @PutMapping("/carrera/{idCarrera}")
-    public ResponseEntity<ResponseDtoJson> editarCarrera(@Nullable @RequestBody @Valid CarreraDto carrera, @PathVariable Integer idCarrera){
+    public ResponseEntity<ResponseDtoJson> editarCarrera(@RequestBody @Valid CarreraDto carrera, @PathVariable Integer idCarrera){
         if (carrera == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Especifique Correctamente los datos de la Carrera", null));
         }

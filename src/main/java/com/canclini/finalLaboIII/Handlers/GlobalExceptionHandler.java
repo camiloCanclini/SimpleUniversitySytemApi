@@ -20,6 +20,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDtoJson> handleException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDtoJson(HttpStatus.INTERNAL_SERVER_ERROR, "Ha ocurrido un error",null));
+        return ResponseEntity.badRequest().body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ha Ocurrido un Error!",null));
     }
 }
