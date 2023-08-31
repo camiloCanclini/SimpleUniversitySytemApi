@@ -47,7 +47,7 @@ public class AlumnoController {
 
     }
     @PutMapping("/alumno/{idAlumno}")
-    public ResponseEntity<ResponseDtoJson> editarAlumno(@RequestBody @Valid AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
+    public ResponseEntity<ResponseDtoJson> editarAlumno(@RequestBody AlumnoEditarDto alumno, @PathVariable Integer idAlumno){
         if (alumno == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDtoJson(HttpStatus.BAD_REQUEST, "Ingrese la entidad alumno", null));
         }
